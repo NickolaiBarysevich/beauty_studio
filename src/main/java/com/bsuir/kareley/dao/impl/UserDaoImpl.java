@@ -5,6 +5,7 @@ import com.bsuir.kareley.dao.mapper.EntityMapper;
 import com.bsuir.kareley.dao.query.Query;
 import com.bsuir.kareley.entity.User;
 import com.bsuir.kareley.entity.UserRole;
+import com.bsuir.kareley.util.PaginatedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -84,5 +85,12 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     @Override
     public Optional<User> findByUserName(String username) {
         return executeForSingleResult(FIND_BY_USERNAME_QUERY, username);
+    }
+
+    @Override
+    public PaginatedQuery<User> findAllWithLimit(int limit, int offset) {
+        var users = executeLimitOffsetQuery(limit, offset);
+        var totalRows = countRows();
+        return new PaginatedQuery<>(users, totalRows);
     }
 }

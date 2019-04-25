@@ -8,6 +8,7 @@ import com.bsuir.kareley.exception.ServiceException;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public abstract class AbstractDao<E extends Identifiable> implements Dao<E> {
     @Override
     public void delete(int id) {
         var deleteQuery = DELETE_QUERY.replace("$tableName", getTableName());
-         executeUpdate(deleteQuery, id);
+        executeUpdate(deleteQuery, id);
     }
 
     @Override
@@ -100,6 +101,21 @@ public abstract class AbstractDao<E extends Identifiable> implements Dao<E> {
         return result.size() != 0
                 ? Optional.of(result.get(0))
                 : Optional.empty();
+    }
+
+    protected List<E> executeLimitOffsetQuery(int limit, int offset) {
+        return executeQuery(String.format("SELECT * FROM %s LIMIT %d OFFSET %d", getTableName(), limit, offset));
+    }
+
+    protected int countRows() {
+        try (var connection = dataSource.getConnection();
+             var statement = connection.createStatement()) {
+            ResultSet resultSet = statement.executeQuery(String.format("SELECT COUNT(*) FROM %s", getTableName()));
+            resultSet.next();
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
     }
 
     @Override
