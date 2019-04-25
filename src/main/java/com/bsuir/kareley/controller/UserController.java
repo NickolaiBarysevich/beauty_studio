@@ -6,14 +6,24 @@ import com.bsuir.kareley.entity.User;
 import com.bsuir.kareley.entity.UserRole;
 import com.bsuir.kareley.exception.ServiceException;
 import com.bsuir.kareley.security.AuthorizationProvider;
-import com.bsuir.kareley.service.api.Service;
 import com.bsuir.kareley.service.api.UserService;
+import com.bsuir.kareley.util.PaginatedQuery;
 import com.bsuir.kareley.validator.EntityValidator;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 import java.util.stream.Stream;
 
 @RestController
@@ -71,5 +81,12 @@ public class UserController {
         user.setRole(userRole);
         userService.update(user);
         return ResponseEntity.ok(user);
+    }
+
+    @GetMapping
+    public ResponseEntity<PaginatedQuery<User>> getUsers(@RequestParam Map<String, String> parameters,
+                                                         @RequestHeader(value = "Authorization", required = false) String authToken) {
+        authProvider.validateUser(authToken, UserRole.ADMIN);
+        return ResponseEntity.ok(userService.findAllWithLimit(parameters));
     }
 }

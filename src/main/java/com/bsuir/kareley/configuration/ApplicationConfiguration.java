@@ -22,9 +22,9 @@ public class ApplicationConfiguration {
     @Bean
     public DataSource dataSource() {
         HikariConfig hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl("jdbc:mysql://localhost:3306/beaty_studio?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
-        hikariConfig.setUsername("root");
-        hikariConfig.setPassword("root");
+        hikariConfig.setJdbcUrl("jdbc:mysql://db4free.net:3306/beauty_studio?useSSL=false&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC");
+        hikariConfig.setUsername("dev_user");
+        hikariConfig.setPassword("root1234");
         hikariConfig.setDriverClassName("com.mysql.cj.jdbc.Driver");
         hikariConfig.setMaximumPoolSize(10);
         return new HikariDataSource(hikariConfig);

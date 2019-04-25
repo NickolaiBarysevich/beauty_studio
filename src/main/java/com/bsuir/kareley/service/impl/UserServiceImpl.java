@@ -6,11 +6,13 @@ import com.bsuir.kareley.entity.User;
 import com.bsuir.kareley.entity.UserRole;
 import com.bsuir.kareley.exception.ServiceException;
 import com.bsuir.kareley.service.api.UserService;
+import com.bsuir.kareley.util.PaginatedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -65,5 +67,24 @@ public class UserServiceImpl implements UserService {
     private User mapToUser(SignUpForm signUpForm) {
         return new User(signUpForm.getUsername(), signUpForm.getPassword(), signUpForm.getFirstName(),
                 signUpForm.getLastName(), signUpForm.getEmail(), signUpForm.getPhoneNumber(), UserRole.USER);
+    }
+
+    @Override
+    public PaginatedQuery<User> findAllWithLimit(Map<String, String> parameters) {
+        var limitValue = parameters.get("limit");
+        var offsetValue = parameters.get("offset");
+        if (limitValue == null || offsetValue == null)
+            throw new ServiceException("limit.offset.invalid", HttpStatus.BAD_REQUEST);
+        int limit;
+        int offset;
+        try {
+            limit = Integer.parseInt(limitValue);
+            offset = Integer.parseInt(offsetValue);
+        } catch (NumberFormatException e) {
+            throw new ServiceException("limit.offset.invalid", HttpStatus.BAD_REQUEST);
+        }
+        if (limit < 0 || offset < 0)
+            throw new ServiceException("limit.offset.invalid", HttpStatus.BAD_REQUEST);
+        return userDao.findAllWithLimit(limit, offset);
     }
 }

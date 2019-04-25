@@ -46,3 +46,16 @@ export const setUserRole = (userId, role, token) => {
     })
         .then(response => response.json())
 }
+
+export const getUsers = (rowsAmount, startRow, token) => {
+    const url = 'http://localhost:8080/api/users/?limit=' + rowsAmount + "&offset=" + startRow ;
+    return await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": "Bearer " + token,
+            'Accept-language': language
+        }
+    })
+        .then(response => response.json())
+}
