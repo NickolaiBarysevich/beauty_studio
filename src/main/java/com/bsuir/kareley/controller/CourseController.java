@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = "/courses",
+@RequestMapping(value = "/api/courses",
         produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
         consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class CourseController {
