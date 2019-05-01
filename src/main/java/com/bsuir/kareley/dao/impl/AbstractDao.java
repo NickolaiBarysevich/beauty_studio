@@ -7,6 +7,7 @@ import com.bsuir.kareley.entity.Identifiable;
 import com.bsuir.kareley.exception.ServiceException;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,36 +30,36 @@ public abstract class AbstractDao<E extends Identifiable> implements Dao<E> {
 
     @Override
     public void create(E entity) {
-        var createQuery = getCreateQuery(entity);
+        Query createQuery = getCreateQuery(entity);
         entity.setId(executeUpdate(createQuery.getQuery(), createQuery.getParameters()));
     }
 
     @Override
     public void update(E entity) {
-        var updateQuery = getUpdateQuery(entity);
+        Query updateQuery = getUpdateQuery(entity);
         executeUpdate(updateQuery.getQuery(), updateQuery.getParameters());
     }
 
     @Override
     public void delete(int id) {
-        var deleteQuery = DELETE_QUERY.replace("$tableName", getTableName());
+        String deleteQuery = DELETE_QUERY.replace("$tableName", getTableName());
         executeUpdate(deleteQuery, id);
     }
 
     @Override
     public Optional<E> findById(int id) {
-        var findByIdQuery = FIND_BY_ID_QUERY.replace("$tableName", getTableName());
+        String findByIdQuery = FIND_BY_ID_QUERY.replace("$tableName", getTableName());
         return executeForSingleResult(findByIdQuery, id);
     }
 
     protected int executeUpdate(String updateQuery, Object... parameters) {
-        try (var connection = dataSource.getConnection();
-             var statement = connection.prepareStatement(updateQuery, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(updateQuery, Statement.RETURN_GENERATED_KEYS)) {
             prepareStatement(statement, parameters);
-            var affectedRows = statement.executeUpdate();
+            int affectedRows = statement.executeUpdate();
             if (affectedRows == 0)
                 throw new ServiceException("No rows affected, entity may not exists");
-            var generatedKeys = statement.getGeneratedKeys();
+            ResultSet generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next())
                 return generatedKeys.getInt(1);
             else
@@ -70,7 +71,7 @@ public abstract class AbstractDao<E extends Identifiable> implements Dao<E> {
 
     private void prepareStatement(PreparedStatement statement, Object... parameters) throws SQLException {
         for (int i = 0; i < parameters.length; i++) {
-            var parameter = parameters[i];
+            Object parameter = parameters[i];
             if (parameter != null)
                 statement.setString(i + 1, parameter.toString());
             else
@@ -79,12 +80,12 @@ public abstract class AbstractDao<E extends Identifiable> implements Dao<E> {
     }
 
     protected List<E> executeQuery(String query, Object... parameters) {
-        try (var connection = dataSource.getConnection();
-             var statement = connection.prepareStatement(query)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
             prepareStatement(statement, parameters);
-            var resultSet = statement.executeQuery();
-            var resultList = new ArrayList<E>();
-            var mapper = getMapper();
+            ResultSet resultSet = statement.executeQuery();
+            List<E> resultList = new ArrayList<>();
+            EntityMapper<E> mapper = getMapper();
             while (resultSet.next())
                 resultList.add(mapper.map(resultSet));
             return resultList;
@@ -94,7 +95,7 @@ public abstract class AbstractDao<E extends Identifiable> implements Dao<E> {
     }
 
     protected Optional<E> executeForSingleResult(String query, Object... parameters) {
-        var result = executeQuery(query, parameters);
+        List<E> result = executeQuery(query, parameters);
         if (result.size() > 1) {
             throw new RuntimeException(String.format("Expected 1, got : %d", result.size()));
         }
@@ -108,8 +109,8 @@ public abstract class AbstractDao<E extends Identifiable> implements Dao<E> {
     }
 
     protected int countRows() {
-        try (var connection = dataSource.getConnection();
-             var statement = connection.createStatement()) {
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement()) {
             ResultSet resultSet = statement.executeQuery(String.format("SELECT COUNT(*) FROM %s", getTableName()));
             resultSet.next();
             return resultSet.getInt(1);

@@ -3,6 +3,7 @@ package com.bsuir.kareley.service.impl;
 import com.bsuir.kareley.dao.api.CourseDao;
 import com.bsuir.kareley.dao.api.UserDao;
 import com.bsuir.kareley.entity.Course;
+import com.bsuir.kareley.entity.User;
 import com.bsuir.kareley.exception.ServiceException;
 import com.bsuir.kareley.service.api.CourseService;
 import com.bsuir.kareley.validator.EntityValidator;
@@ -11,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CourseServiceImpl implements CourseService {
@@ -62,22 +64,22 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public Course findById(int id) {
-        var optionalCourse = courseDao.findById(id);
+        Optional<Course> optionalCourse = courseDao.findById(id);
         Course course = optionalCourse.orElseThrow(() -> new ServiceException("course.not.found", HttpStatus.NOT_FOUND));
         assembleCourse(course);
         return course;
     }
 
     private void assembleCourse(Course course) {
-        var teacher = userDao.findById(course.getTeacher().getId()).orElseThrow(() -> new ServiceException("user.not.found", HttpStatus.NOT_FOUND));
-        var participants = userDao.findParticipantsByCourseId(course.getId());
+        User teacher = userDao.findById(course.getTeacher().getId()).orElseThrow(() -> new ServiceException("user.not.found", HttpStatus.NOT_FOUND));
+        List<User> participants = userDao.findParticipantsByCourseId(course.getId());
         course.setTeacher(teacher);
         course.setParticipants(participants);
     }
 
     @Override
     public List<Course> findAll() {
-        var courses = courseDao.findAll();
+        List<Course> courses = courseDao.findAll();
         courses.forEach(this::assembleCourse);
         return courses;
     }

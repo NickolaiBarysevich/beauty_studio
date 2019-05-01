@@ -1,0 +1,310 @@
+@startuml
+
+title __COMBSUIRKARELEY's Class Diagram__\n
+
+  package com.bsuir.kareley.dao.impl {
+    abstract class AbstractDao {
+    }
+  }
+  
+
+  package com.bsuir.kareley.configuration {
+    class ApplicationConfiguration {
+    }
+  }
+  
+
+  package com.bsuir.kareley.security {
+    class AuthorizationProvider {
+    }
+  }
+  
+
+  package com.bsuir.kareley.dto {
+    class AuthorizationResponse {
+    }
+  }
+  
+
+  package com.bsuir.kareley.entity {
+    class Course {
+    }
+  }
+  
+
+  package com.bsuir.kareley.controller {
+    class CourseController {
+    }
+  }
+  
+
+  package com.bsuir.kareley.dao.api {
+    interface CourseDao {
+    }
+  }
+  
+
+  package com.bsuir.kareley.dao.impl {
+    class CourseDaoImpl {
+    }
+  }
+  
+
+  package com.bsuir.kareley.service.api {
+    interface CourseService {
+    }
+  }
+  
+
+  package com.bsuir.kareley.service.impl {
+    class CourseServiceImpl {
+    }
+  }
+  
+
+  package com.bsuir.kareley.validator {
+    class CourseValidator {
+    }
+  }
+  
+
+  package com.bsuir.kareley.dao.api {
+    interface Dao {
+    }
+  }
+  
+
+  package com.bsuir.kareley.dao.mapper {
+    interface EntityMapper {
+    }
+  }
+  
+
+  package com.bsuir.kareley.validator {
+    interface EntityValidator {
+    }
+  }
+  
+
+  package com.bsuir.kareley.dto {
+    class ErrorResponse {
+    }
+  }
+  
+
+  package com.bsuir.kareley.entity {
+    interface Identifiable {
+    }
+  }
+  
+
+  package com.bsuir.kareley.entity {
+    class Order {
+    }
+  }
+  
+
+  package com.bsuir.kareley.controller {
+    class OrderController {
+    }
+  }
+  
+
+  package com.bsuir.kareley.dao.api {
+    interface OrderDao {
+    }
+  }
+  
+
+  package com.bsuir.kareley.dao.impl {
+    class OrderDaoImpl {
+    }
+  }
+  
+
+  package com.bsuir.kareley.service.api {
+    interface OrderService {
+    }
+  }
+  
+
+  package com.bsuir.kareley.service.impl {
+    class OrderServiceImpl {
+    }
+  }
+  
+
+  package com.bsuir.kareley.entity {
+    enum OrderStatus {
+    }
+  }
+  
+
+  package com.bsuir.kareley.util {
+    class PaginatedQuery {
+    }
+  }
+  
+
+  package com.bsuir.kareley.dto {
+    class ParticipantCourseForm {
+    }
+  }
+  
+
+  package com.bsuir.kareley.dao.query {
+    class Query {
+    }
+  }
+  
+
+  package com.bsuir.kareley.service.api {
+    interface Service {
+    }
+  }
+  
+
+  package com.bsuir.kareley.exception {
+    class ServiceException {
+    }
+  }
+  
+
+  package com.bsuir.kareley.exception {
+    package com.bsuir.kareley.exception.handler {
+      class ServiceExceptionHandler {
+      }
+    }
+  }
+  
+
+  package com.bsuir.kareley.configuration {
+    class ServletInitializer {
+    }
+  }
+  
+
+  package com.bsuir.kareley.dto {
+    class SignInForm {
+    }
+  }
+  
+
+  package com.bsuir.kareley.validator {
+    class SignInFormValidator {
+    }
+  }
+  
+
+  package com.bsuir.kareley.dto {
+    class SignUpForm {
+    }
+  }
+  
+
+  package com.bsuir.kareley.validator {
+    class SignUpFormValidator {
+    }
+  }
+  
+
+  package com.bsuir.kareley.util {
+    class StringUtils {
+    }
+  }
+  
+
+  package com.bsuir.kareley.entity {
+    class User {
+    }
+  }
+  
+
+  package com.bsuir.kareley.controller {
+    class UserController {
+    }
+  }
+  
+
+  package com.bsuir.kareley.dao.api {
+    interface UserDao {
+    }
+  }
+  
+
+  package com.bsuir.kareley.dao.impl {
+    class UserDaoImpl {
+    }
+  }
+  
+
+  package com.bsuir.kareley.security {
+    class UserPrincipal {
+    }
+  }
+  
+
+  package com.bsuir.kareley.entity {
+    enum UserRole {
+    }
+  }
+  
+
+  package com.bsuir.kareley.service.api {
+    interface UserService {
+    }
+  }
+  
+
+  package com.bsuir.kareley.service.impl {
+    class UserServiceImpl {
+    }
+  }
+  
+
+  AbstractDao -up-|> Dao
+  Course -up-|> Identifiable
+  Course o-- User : teacher
+  CourseController o-- CourseService : courseService
+  CourseController o-- AuthorizationProvider : authProvider
+  CourseDaoImpl -up-|> CourseDao
+  CourseDaoImpl -up-|> AbstractDao
+  CourseServiceImpl -up-|> CourseService
+  CourseServiceImpl o-- CourseDao : courseDao
+  CourseServiceImpl o-- UserDao : userDao
+  CourseValidator -up-|> EntityValidator
+  Order -up-|> Identifiable
+  Order o-- User : customer
+  Order o-- Course : course
+  Order o-- OrderStatus : orderStatus
+  OrderController o-- OrderService : orderService
+  OrderController o-- AuthorizationProvider : authProvider
+  OrderDaoImpl -up-|> OrderDao
+  OrderDaoImpl -up-|> AbstractDao
+  OrderServiceImpl -up-|> OrderService
+  OrderServiceImpl o-- OrderDao : orderDao
+  OrderServiceImpl o-- UserDao : userDao
+  OrderServiceImpl o-- CourseService : courseService
+  ServiceExceptionHandler -up-|> ResponseEntityExceptionHandler
+  ServletInitializer -up-|> WebApplicationInitializer
+  SignInFormValidator -up-|> EntityValidator
+  SignUpFormValidator -up-|> EntityValidator
+  User -up-|> Identifiable
+  User o-- UserRole : role
+  UserController o-- UserService : userService
+  UserController o-- AuthorizationProvider : authProvider
+  UserDaoImpl -up-|> UserDao
+  UserDaoImpl -up-|> AbstractDao
+  UserPrincipal o-- UserRole : userRole
+  UserServiceImpl -up-|> UserService
+  UserServiceImpl o-- UserDao : userDao
+
+
+right footer
+
+
+PlantUML diagram generated by SketchIt! (https://bitbucket.org/pmesmeur/sketch.it)
+For more information about this tool, please contact philippe.mesmeur@gmail.com
+endfooter
+
+@enduml

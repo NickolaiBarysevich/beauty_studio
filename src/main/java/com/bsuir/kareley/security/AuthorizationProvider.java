@@ -54,9 +54,9 @@ public class AuthorizationProvider {
     }
 
     private UserPrincipal buildUserPrincipal(String authToken) {
-        var id = parseId(authToken);
-        var username = parseUsername(authToken);
-        var role = parseRole(authToken);
+        int id = parseId(authToken);
+        String username = parseUsername(authToken);
+        UserRole role = parseRole(authToken);
         return new UserPrincipal(id, username, role);
     }
 

@@ -8,6 +8,8 @@ import com.bsuir.kareley.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import javax.sql.DataSource;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,12 +31,12 @@ public class CourseDaoImpl extends AbstractDao<Course> implements CourseDao {
 
     @Override
     protected Query getCreateQuery(Course course) {
-        var parameters = extractCourse(course);
+        List<Object> parameters = extractCourse(course);
         return new Query(CREATE_QUERY, parameters.toArray());
     }
 
     private List<Object> extractCourse(Course course) {
-        var values = new ArrayList<>();
+        List<Object> values = new ArrayList<>();
         values.add(course.getTitle());
         values.add(course.getDescription());
         values.add(course.getParticipantsNumber());
@@ -48,7 +50,7 @@ public class CourseDaoImpl extends AbstractDao<Course> implements CourseDao {
 
     @Override
     protected Query getUpdateQuery(Course course) {
-        var parameters = extractCourse(course);
+        List<Object> parameters = extractCourse(course);
         parameters.add(course.getId());
         return new Query(UPDATE_QUERY, parameters.toArray());
     }
@@ -61,15 +63,15 @@ public class CourseDaoImpl extends AbstractDao<Course> implements CourseDao {
     @Override
     protected EntityMapper<Course> getMapper() {
         return rs -> {
-            var id = rs.getInt("id");
-            var title = rs.getString("title");
-            var description = rs.getString("description");
-            var participantsNumber = rs.getInt("participants_number");
-            var startDate = rs.getDate("start_date").toLocalDate();
-            var endDate = rs.getDate("end_date").toLocalDate();
-            var lessonsAmount = rs.getInt("lessons_amount");
-            var price = rs.getBigDecimal("price");
-            var teacher = new User(rs.getInt("teacher_id"));
+            int id = rs.getInt("id");
+            String title = rs.getString("title");
+            String description = rs.getString("description");
+            int participantsNumber = rs.getInt("participants_number");
+            LocalDate startDate = rs.getDate("start_date").toLocalDate();
+            LocalDate endDate = rs.getDate("end_date").toLocalDate();
+            int lessonsAmount = rs.getInt("lessons_amount");
+            BigDecimal price = rs.getBigDecimal("price");
+            User teacher = new User(rs.getInt("teacher_id"));
             return new Course(id, title, description, participantsNumber, startDate, endDate, lessonsAmount, price, teacher, new ArrayList<>());
         };
     }

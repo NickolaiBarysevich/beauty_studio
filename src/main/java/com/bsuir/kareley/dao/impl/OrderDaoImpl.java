@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
@@ -49,11 +50,11 @@ public class OrderDaoImpl extends AbstractDao<Order> implements OrderDao {
     @Override
     protected EntityMapper<Order> getMapper() {
         return rs -> {
-            var id = rs.getInt("id");
-            var orderTime = rs.getTimestamp("order_time").toLocalDateTime();
-            var customer = new User(rs.getInt("user_id"));
-            var course = new Course(rs.getInt("course_id"));
-            var orderStatus = OrderStatus.valueOf(rs.getString("order_status"));
+            int id = rs.getInt("id");
+            LocalDateTime orderTime = rs.getTimestamp("order_time").toLocalDateTime();
+            User customer = new User(rs.getInt("user_id"));
+            Course course = new Course(rs.getInt("course_id"));
+            OrderStatus orderStatus = OrderStatus.valueOf(rs.getString("order_status"));
             return new Order(id, orderTime, customer, course, orderStatus);
         };
     }

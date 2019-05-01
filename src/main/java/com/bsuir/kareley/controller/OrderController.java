@@ -57,7 +57,7 @@ public class OrderController {
     public ResponseEntity<Order> makeOrder(@RequestHeader(value = "Authorization", required = false) String authToken,
                                            @RequestParam int courseId) {
         UserPrincipal userPrincipal = authProvider.validateUser(authToken, UserRole.USER);
-        var order = new Order(LocalDateTime.now(), new User(userPrincipal.getId()), new Course(courseId), OrderStatus.PROCESSING);
+        Order order = new Order(LocalDateTime.now(), new User(userPrincipal.getId()), new Course(courseId), OrderStatus.PROCESSING);
         orderService.create(order);
         return ResponseEntity.status(HttpStatus.CREATED).body(orderService.findById(order.getId()));
     }
