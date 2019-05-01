@@ -2,8 +2,10 @@ package com.bsuir.kareley.service.impl;
 
 import com.bsuir.kareley.dao.api.OrderDao;
 import com.bsuir.kareley.dao.api.UserDao;
+import com.bsuir.kareley.entity.Course;
 import com.bsuir.kareley.entity.Order;
 import com.bsuir.kareley.entity.OrderStatus;
+import com.bsuir.kareley.entity.User;
 import com.bsuir.kareley.exception.ServiceException;
 import com.bsuir.kareley.service.api.CourseService;
 import com.bsuir.kareley.service.api.OrderService;
@@ -45,21 +47,21 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order findById(int id) {
-        var order = orderDao.findById(id).orElseThrow(() -> new ServiceException("order.not.found", HttpStatus.NOT_FOUND));
+        Order order = orderDao.findById(id).orElseThrow(() -> new ServiceException("order.not.found", HttpStatus.NOT_FOUND));
         assembleOrder(order);
         return order;
     }
 
     private void assembleOrder(Order order) {
-        var user = userDao.findById(order.getCustomer().getId()).orElseThrow(() -> new ServiceException("user.not.found", HttpStatus.NOT_FOUND));
-        var course = courseService.findById(order.getCourse().getId());
+        User user = userDao.findById(order.getCustomer().getId()).orElseThrow(() -> new ServiceException("user.not.found", HttpStatus.NOT_FOUND));
+        Course course = courseService.findById(order.getCourse().getId());
         order.setCustomer(user);
         order.setCourse(course);
     }
 
     @Override
     public List<Order> findAll() {
-        var orders = orderDao.findAll();
+        List<Order> orders = orderDao.findAll();
         orders.forEach(this::assembleOrder);
         return orders;
     }

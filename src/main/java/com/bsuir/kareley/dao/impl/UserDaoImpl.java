@@ -34,12 +34,12 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     protected Query getCreateQuery(User user) {
-        var parameters = extractUser(user);
+        List<Object> parameters = extractUser(user);
         return new Query(CREATE_QUERY, parameters.toArray());
     }
 
     private List<Object> extractUser(User user) {
-        var values = new ArrayList<>();
+        List<Object> values = new ArrayList<>();
         values.add(user.getUsername());
         values.add(user.getPassword());
         values.add(user.getFirstName());
@@ -52,7 +52,7 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     protected Query getUpdateQuery(User user) {
-        var parameters = extractUser(user);
+        List<Object> parameters = extractUser(user);
         parameters.add(user.getId());
         return new Query(UPDATE_QUERY, parameters.toArray());
     }
@@ -65,14 +65,14 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
     @Override
     protected EntityMapper<User> getMapper() {
         return rs -> {
-            var id = rs.getInt("id");
-            var username = rs.getString("username");
-            var password = rs.getString("password");
-            var firstName = rs.getString("first_name");
-            var lastName = rs.getString("last_name");
-            var email = rs.getString("email");
-            var phoneNumber = rs.getString("phone_number");
-            var role = UserRole.valueOf(rs.getString("role"));
+            int id = rs.getInt("id");
+            String username = rs.getString("username");
+            String password = rs.getString("password");
+            String firstName = rs.getString("first_name");
+            String lastName = rs.getString("last_name");
+            String email = rs.getString("email");
+            String phoneNumber = rs.getString("phone_number");
+            UserRole role = UserRole.valueOf(rs.getString("role"));
             return new User(id, username, password, firstName, lastName, email, phoneNumber, role);
         };
     }
@@ -89,8 +89,8 @@ public class UserDaoImpl extends AbstractDao<User> implements UserDao {
 
     @Override
     public PaginatedQuery<User> findAllWithLimit(int limit, int offset) {
-        var users = executeLimitOffsetQuery(limit, offset);
-        var totalRows = countRows();
+        List<User> users = executeLimitOffsetQuery(limit, offset);
+        int totalRows = countRows();
         return new PaginatedQuery<>(users, totalRows);
     }
 }

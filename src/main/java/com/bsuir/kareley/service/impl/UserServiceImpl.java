@@ -71,8 +71,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public PaginatedQuery<User> findAllWithLimit(Map<String, String> parameters) {
-        var limitValue = parameters.get("limit");
-        var offsetValue = parameters.get("offset");
+        String limitValue = parameters.get("limit");
+        String offsetValue = parameters.get("offset");
         if (limitValue == null || offsetValue == null)
             throw new ServiceException("limit.offset.invalid", HttpStatus.BAD_REQUEST);
         int limit;
