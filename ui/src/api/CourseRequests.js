@@ -30,11 +30,11 @@
     language - the language of response can be "ru" or "en"
     mine - if specified returns courses that the user ordered
 */
-export const getCourses = (token, language, mine) => {
-    return await fetch("http://localhost:8080/api/courses" +  mine  ? "?mine" : "", {
+export const getCourses = (token, mine) => {
+    return fetch("http://localhost:8080/api/courses" +  mine  ? "?mine" : "", {
         headers: {
             "Authorization": "Bearer " + token,
-            'Accept-language': language
+            'Accept-language': "ru"
         }
     })
         .then(response => response.json())
@@ -61,13 +61,13 @@ export const getCourses = (token, language, mine) => {
     token - authorization token for user
     language - the language of response can be "ru" or "en"
 */
-export const createCourse = (parameters, token, language) => {
-    return await fetch("http://localhost:8080/api/courses", {
+export const createCourse = (parameters, token) => {
+    return fetch("http://localhost:8080/api/courses", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             "Authorization": "Bearer " + token,
-            'Accept-language': language
+            'Accept-language': "ru"
         },
         body: JSON.stringify({
             title: parameters.title,
@@ -94,14 +94,14 @@ export const createCourse = (parameters, token, language) => {
     token - authorization token for user
     language - the language of response can be "ru" or "en"
 */
-export const deleteCourse = (id, token, language) => {
+export const deleteCourse = (id, token) => {
     const url = "http://localhost:8080/api/courses/" + id;
-    return await fetch(url, {
+    return fetch(url, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
             "Authorization": "Bearer " + token,
-            'Accept-language': language
+            'Accept-language': "ru"
         }
     })
         .then(response => response.ok ? "ok" : response.json())
@@ -129,13 +129,13 @@ export const deleteCourse = (id, token, language) => {
     token - authorization token for user
     language - the language of response can be "ru" or "en"
 */
-export const updateCourse = (course, token, language) => {
-    return await fetch("http://localhost:8080/api/courses/" + course.id, {
+export const updateCourse = (course, token) => {
+    return fetch("http://localhost:8080/api/courses/" + course.id, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
             "Authorization": "Bearer " + token,
-            'Accept-language': language
+            'Accept-language': "ru"
         },
         body: JSON.stringify({
             title: parameters.title,
@@ -168,13 +168,13 @@ export const updateCourse = (course, token, language) => {
     token - authorization token for user
     language - the language of response can be "ru" or "en"
 */
-export const addOrRemoveParticipant = (participantCourseForm, action, token, language) => {
-    return await fetch("http://localhost:8080/api/courses?userAction=" + action, {
+export const addOrRemoveParticipant = (participantCourseForm, action, token) => {
+    return fetch("http://localhost:8080/api/courses?userAction=" + action, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
             "Authorization": "Bearer " + token,
-            'Accept-language': language
+            'Accept-language': "ru"
         },
         body: JSON.stringify({
             courseId: participantCourseForm.courseId,
