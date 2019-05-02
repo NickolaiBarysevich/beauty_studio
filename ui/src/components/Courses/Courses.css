@@ -1,0 +1,37 @@
+.courses {
+  position: relative;
+  height: 100vh;
+
+  overflow: hidden;
+}
+
+.courses .blur,
+.courses_content {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.courses .blur {
+  margin: -5px;
+  z-index: 1;
+
+  background: #00000047 url('./courses_bg.jpg');
+  background-blend-mode: darken;
+  background-position: center center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  filter: blur(5px);
+}
+
+.courses_content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  
+  z-index: 5;
+}
