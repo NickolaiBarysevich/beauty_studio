@@ -79,14 +79,14 @@ export const signUp = (parameters, language) => {
     token - authorization token for user
     language - the language of response can be "ru" or "en"
 */
-export const setUserRole = (userId, role, token, language) => {
+export const setUserRole = (userId, role, token) => {
     const url = 'http://localhost:8080/api/users/' + userId + "?role=" + role ;
-    return await fetch(url, {
+    return fetch(url, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
             "Authorization": "Bearer " + token,
-            'Accept-language': language
+            'Accept-language': "ru"
         }
     })
         .then(response => response.json())
@@ -130,14 +130,14 @@ export const setUserRole = (userId, role, token, language) => {
     token - authorization token for user
     language - the language of response can be "ru" or "en""
 */
-export const getUsers = (rowsAmount, startRow, token, language) => {
+export const getUsers = (rowsAmount, startRow, token) => {
     const url = 'http://localhost:8080/api/users/?limit=' + rowsAmount + "&offset=" + startRow ;
-    return await fetch(url, {
+    return fetch(url, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             "Authorization": "Bearer " + token,
-            'Accept-language': language
+            'Accept-language': "ru"
         }
     })
         .then(response => response.json())
