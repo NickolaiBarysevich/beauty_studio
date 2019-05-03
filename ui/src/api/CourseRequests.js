@@ -138,15 +138,15 @@ export const updateCourse = (course, token) => {
             'Accept-language': "ru"
         },
         body: JSON.stringify({
-            title: parameters.title,
-            description: parameters.description,
-            participantsNumber: parameters.participantsNumber,
-            startDate: parameters.startDate,
-            endDate: parameters.endDate,
-            lessonsAmount: parameters.lessonsAmount,
-            price: parameters.price,
+            title: course.title,
+            description: course.description,
+            participantsNumber: course.participantsNumber,
+            startDate: course.startDate,
+            endDate: course.endDate,
+            lessonsAmount: course.lessonsAmount,
+            price: course.price,
             teacher: {
-                id: parameters.teacherId
+                id: course.teacherId
             }
         })
     })
