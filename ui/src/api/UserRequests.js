@@ -20,7 +20,7 @@
     language - the language of response can be "ru" or "en"
 */
 export const signIn = (username, password) => {
-    const signInUrl = 'http://localhost:8080/api/users/signIn';
+    const signInUrl = '/api/users/signIn';
     return fetch(signInUrl, {
         method: 'POST',
         headers: {
@@ -51,7 +51,7 @@ export const signIn = (username, password) => {
 
 */
 export const signUp = (parameters) => {
-    const signUpUrl = 'http://localhost:8080/api/users/signUp';
+    const signUpUrl = '/api/users/signUp';
     return fetch(signUpUrl, {
         method: 'POST',
         headers: {
@@ -80,7 +80,7 @@ export const signUp = (parameters) => {
     language - the language of response can be "ru" or "en"
 */
 export const setUserRole = (userId, role, token) => {
-    const url = 'http://localhost:8080/api/users/' + userId + "?role=" + role ;
+    const url = '/api/users/' + userId + "?role=" + role ;
     return fetch(url, {
         method: 'PUT',
         headers: {
@@ -131,7 +131,7 @@ export const setUserRole = (userId, role, token) => {
     language - the language of response can be "ru" or "en""
 */
 export const getUsers = (rowsAmount, startRow, token) => {
-    const url = 'http://localhost:8080/api/users/?limit=' + rowsAmount + "&offset=" + startRow ;
+    const url = '/api/users/?limit=' + rowsAmount + "&offset=" + startRow ;
     return fetch(url, {
         method: 'GET',
         headers: {
@@ -141,4 +141,4 @@ export const getUsers = (rowsAmount, startRow, token) => {
         }
     })
         .then(response => response.json())
-}
+};

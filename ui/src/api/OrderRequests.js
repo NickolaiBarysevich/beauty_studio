@@ -22,7 +22,7 @@
     mine - if specified returns user orders
 */
 export const getOrders = (token, mine) => {
-    const url = 'http://localhost:8080/api/orders' + mine ? "?mine" : "" ;
+    const url = 'http://localhost:8080/api/orders' + (mine ? "?mine" : "") ;
     return fetch(url, {
         method: 'GET',
         headers: {
@@ -42,7 +42,7 @@ export const getOrders = (token, mine) => {
     courseId - id of the course that must be ordered
 */
 export const createOrder = (token, courseId) => {
-    const url = 'http://localhost:8080/api/orders?courseId=' + courseId ;
+    const url = '/api/orders?courseId=' + courseId ;
     return fetch(url, {
         method: 'PUT',
         headers: {
@@ -63,7 +63,7 @@ export const createOrder = (token, courseId) => {
     status - status that should be applied. Options: processing, approved, canceled.
 */
 export const changeOrderStatus = (token, orderId, status) => {
-    const url = 'http://localhost:8080/api/orders/' + orderId + "?status=" + status;
+    const url = '/api/orders/' + orderId + "?status=" + status;
     return fetch(url, {
         method: 'PUT',
         headers: {

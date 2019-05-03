@@ -31,13 +31,14 @@
     mine - if specified returns courses that the user ordered
 */
 export const getCourses = (token, mine) => {
-    return fetch("http://localhost:8080/api/courses" +  mine  ? "?mine" : "", {
+    return fetch("/api/courses" +  (mine  ? "?mine" : ""), {
         headers: {
+            'Content-Type': 'application/json',
             "Authorization": "Bearer " + token,
             'Accept-language': "ru"
         }
-    })
-        .then(response => response.json())
+    }).then(response => response.json())
+
 };
 
 /*
@@ -62,7 +63,7 @@ export const getCourses = (token, mine) => {
     language - the language of response can be "ru" or "en"
 */
 export const createCourse = (parameters, token) => {
-    return fetch("http://localhost:8080/api/courses", {
+    return fetch("/api/courses", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -95,7 +96,7 @@ export const createCourse = (parameters, token) => {
     language - the language of response can be "ru" or "en"
 */
 export const deleteCourse = (id, token) => {
-    const url = "http://localhost:8080/api/courses/" + id;
+    const url = "/api/courses/" + id;
     return fetch(url, {
         method: 'DELETE',
         headers: {
@@ -130,7 +131,7 @@ export const deleteCourse = (id, token) => {
     language - the language of response can be "ru" or "en"
 */
 export const updateCourse = (course, token) => {
-    return fetch("http://localhost:8080/api/courses/" + course.id, {
+    return fetch("/api/courses/" + course.id, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
@@ -169,7 +170,7 @@ export const updateCourse = (course, token) => {
     language - the language of response can be "ru" or "en"
 */
 export const addOrRemoveParticipant = (participantCourseForm, action, token) => {
-    return fetch("http://localhost:8080/api/courses?userAction=" + action, {
+    return fetch("/api/courses?userAction=" + action, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
