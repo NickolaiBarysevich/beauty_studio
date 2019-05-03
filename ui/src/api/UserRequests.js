@@ -19,13 +19,13 @@
     password - user's password
     language - the language of response can be "ru" or "en"
 */
-export const signIn = (username, password, language) => {
+export const signIn = (username, password) => {
     const signInUrl = 'http://localhost:8080/api/users/signIn';
-    return await fetch(signInUrl, {
+    return fetch(signInUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Accept-language': language
+            'Accept-language': "ru"
         },
         body: JSON.stringify({
             username: username,
@@ -50,13 +50,13 @@ export const signIn = (username, password, language) => {
     }
 
 */
-export const signUp = (parameters, language) => {
+export const signUp = (parameters) => {
     const signUpUrl = 'http://localhost:8080/api/users/signUp';
-    return await fetch(signUpUrl, {
+    return fetch(signUpUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Accept-language': language
+            'Accept-language': "ru"
         },
         body: JSON.stringify({
             username: parameters.username,
