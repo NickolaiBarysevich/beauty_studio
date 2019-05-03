@@ -1,49 +1,42 @@
-// import React, {Component} from 'react';
+import React, {Component} from 'react';
 
-// class Course extends Component {
-// 	constructor(props) {
-// 		super(props);
+class Course extends Component {
+	constructor(props) {
+		super(props);
 
-// 		this.state = {
-// 			clickNumber: 0
-// 		}
-// 	}
+		this.state = {
+			isOpen: null
+		}
+	}
 
-// 	render() {
-// 		const {article, isOpen} = this.props;
-// 		const body = isOpen && <section className='card-text'>{article.text}</section>;
+	render() {
+		const {key, imgSrc, title, description} = this.props;
 
-// 		return (
-// 			<div className="col-sm course_item self_makeup">
-//         <div className="card" style={{width: "18rem"}}>
-//           <img src="..." className="card-img-top" alt="..." />
-//           <div className="card-body">
-//             <h5 className="card-title">Название карточки</h5>
-//             <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-//             <a href="#" className="btn btn-primary">Переход куда-нибудь</a>
-//           </div>
-//         </div>
-//       </div>
-// 		)
-// 	}
+		const cardClassname = "col-sm course_item " + key;
 
-// 	clickHandler = () => {
-// 		// this.setState({
-// 		// 	isOpen: !this.state.isOpen
-// 		// })
-// 	}
-// };
+		return (
+			<div className={cardClassname}>
+				<div className="card" style={{width: "18rem"}}>
+					<img src={imgSrc} className="card-img-top" alt={title} />
+					<div className="card-body">
+						<h5 className="card-title">{title}</h5>
+						<p className="card-text">{description}</p>
+						<a href="#" className="btn btn-primary">Подробнее</a>
+					</div>
+				</div>
+			</div>
+		)
+	}
 
-// export default Course;
+	// clickHandler = () => {
+	// 	this.setState({
+	// 		isOpen: !this.state.isOpen
+	// 	})
+	// }
+};
 
-// // class Course extends Component {
-// // 	constructor(props) {
-// // 		super(props);
+export default Course;
 
-// // 		this.state = {
-// // 			clickNumber: 0
-// // 		}
-// // 	}
 
 // // 	render() {
 // // 		const {article, isOpen} = this.props;
@@ -67,11 +60,3 @@
 // // 		)
 // // 	}
 
-// // 	clickHandler = () => {
-// // 		// this.setState({
-// // 		// 	isOpen: !this.state.isOpen
-// // 		// })
-// // 	}
-// // };
-
-// // export default Course;
