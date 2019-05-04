@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import {getCourses} from "../../api/CourseRequests";
+// import {getCourses} from "../../api/CourseRequests";
 import Course from '../Course/Course';
 
 import './Courses.scss';
@@ -14,18 +14,18 @@ class Courses extends Component {
         }
     }
 
-    componentWillMount() {
-        this.setCourses()
-    }
+    // componentWillMount() {
+    //     this.setCourses()
+    // }
 
-    setCourses = () => {
-        getCourses(null, false)
-            .then(courses => {
-                console.log("in promise: ", courses);  //TODO: remove when checked with backend
-                this.setState({courseList: courses});
-
-            });
-    };
+    // setCourses = () => {
+    //     getCourses(null, false)
+    //         .then(courses => {
+    //             console.log("in promise: ", courses);  //TODO: remove when checked with backend
+    //             this.setState({courseList: courses});
+    //
+    //         });
+    // };
 
 
     render() {
@@ -35,26 +35,32 @@ class Courses extends Component {
 
                 <div className="courses_content container">
                     <div className="row">
-                        <Course
-                            key="self_makeup"
-                            imgSrc={null}
-                            title="Макияж для себя"
-                            description="self-makeup description"
-                        />
+                        <div className="col-sm">
+                            <Course
+                                keyName="self_makeup"
+                                imgUrl="https://i.ytimg.com/vi/WZerlq1RYUQ/maxresdefault.jpg"
+                                title={"Базовый курс \"Сам себе визажист\""}
+                                description="self-makeup description"
+                            />
+                        </div>
 
-                        <Course
-                            key="base_makeup"
-                            imgSrc={null}
-                            title="Базовый курс профессионального макияжа"
-                            description="base-makeup description"
-                        />
+                        <div className="col-sm">
+                            <Course
+                                keyName="base_makeup"
+                                imgUrl="https://i.ytimg.com/vi/WZerlq1RYUQ/maxresdefault.jpg"
+                                title="Базовый курс профессионального макияжа"
+                                description="base-makeup description"
+                            />
+                        </div>
 
-                        <Course
-                            key="advanced_makeup"
-                            imgSrc={null}
-                            title="Повышение квалификации визажистов"
-                            description="advanced-makeup description"
-                        />
+                        <div className="col-sm">
+                            <Course
+                                keyName="advanced_makeup"
+                                imgUrl="https://i.ytimg.com/vi/WZerlq1RYUQ/maxresdefault.jpg"
+                                title="Повышение квалификации визажистов"
+                                description="advanced-makeup description"
+                            />
+                        </div>
                     </div>
                 </div>
             </section>
