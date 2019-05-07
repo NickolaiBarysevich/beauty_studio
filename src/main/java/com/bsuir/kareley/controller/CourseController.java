@@ -1,5 +1,6 @@
 package com.bsuir.kareley.controller;
 
+import com.bsuir.kareley.dto.CourseDto;
 import com.bsuir.kareley.dto.ParticipantCourseForm;
 import com.bsuir.kareley.entity.Course;
 import com.bsuir.kareley.entity.UserRole;
@@ -11,9 +12,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api/courses",
@@ -31,22 +41,24 @@ public class CourseController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Course>> getCourses(@RequestHeader(value = "Authorization", required = false) String authToken,
-                                                   @RequestParam Map<String, String> parameters) {
-        if (parameters.containsKey("mine")) {
-            UserPrincipal userPrincipal = authProvider.validateUser(authToken, UserRole.USER, UserRole.TEACHER);
-            return ResponseEntity.ok(courseService.findCoursesForUser(userPrincipal.getId()));
-        } else
-            return ResponseEntity.ok(courseService.findAll());
+    public ResponseEntity<List<CourseDto>> getCourses()
+    {
+        return ResponseEntity.ok(courseService.findAll());
+    }
+
+    @GetMapping(params = "mine")
+    public ResponseEntity<List<CourseDto>> getCourses(@RequestHeader(value = "Authorization", required = false) String authToken) {
+        UserPrincipal userPrincipal = authProvider.validateUser(authToken, UserRole.USER, UserRole.TEACHER);
+        return ResponseEntity.ok(courseService.findCoursesForUser(userPrincipal.getId()));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Course> getCourseById(@PathVariable int id) {
+    public ResponseEntity<CourseDto> getCourseById(@PathVariable int id) {
         return ResponseEntity.ok(courseService.findById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Course> createCourse(@RequestBody Course course,
+    public ResponseEntity<CourseDto> createCourse(@RequestBody CourseDto course,
                                                @RequestHeader(value = "Authorization", required = false) String authToken) {
         authProvider.validateUser(authToken, UserRole.ADMIN);
         courseService.create(course);
@@ -54,7 +66,7 @@ public class CourseController {
     }
 
     @PutMapping
-    public ResponseEntity<Course> processUserActions(@RequestBody ParticipantCourseForm form,
+    public ResponseEntity<CourseDto> processUserActions(@RequestBody ParticipantCourseForm form,
                                                      @RequestParam String userAction,
                                                      @RequestHeader(value = "Authorization", required = false) String authToken) {
         authProvider.validateUser(authToken, UserRole.ADMIN, UserRole.TEACHER);
@@ -68,7 +80,7 @@ public class CourseController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Course> editCourse(@RequestBody Course course, @PathVariable int id,
+    public ResponseEntity<CourseDto> editCourse(@RequestBody CourseDto course, @PathVariable int id,
                                              @RequestHeader(value = "Authorization", required = false) String authToken) {
         authProvider.validateUser(authToken, UserRole.ADMIN, UserRole.TEACHER);
         course.setId(id);
@@ -77,7 +89,7 @@ public class CourseController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Course> deleteCourse(@PathVariable int id,
+    public ResponseEntity<CourseDto> deleteCourse(@PathVariable int id,
                                                @RequestHeader(value = "Authorization", required = false) String authToken) {
         authProvider.validateUser(authToken, UserRole.ADMIN);
         courseService.delete(id);

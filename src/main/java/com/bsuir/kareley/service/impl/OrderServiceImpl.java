@@ -54,7 +54,7 @@ public class OrderServiceImpl implements OrderService {
 
     private void assembleOrder(Order order) {
         User user = userDao.findById(order.getCustomer().getId()).orElseThrow(() -> new ServiceException("user.not.found", HttpStatus.NOT_FOUND));
-        Course course = courseService.findById(order.getCourse().getId());
+        Course course = courseService.findCourseById(order.getCourse().getId());
         order.setCustomer(user);
         order.setCourse(course);
     }

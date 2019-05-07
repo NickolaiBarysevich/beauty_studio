@@ -2,7 +2,7 @@ package com.bsuir.kareley.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class ServiceException extends RuntimeException{
+public class ServiceException extends RuntimeException {
 
     private HttpStatus httpStatus;
     private Object[] arguments;

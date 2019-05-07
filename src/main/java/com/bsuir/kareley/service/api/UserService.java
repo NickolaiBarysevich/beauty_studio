@@ -1,7 +1,7 @@
 package com.bsuir.kareley.service.api;
 
-import com.bsuir.kareley.entity.User;
 import com.bsuir.kareley.dto.SignUpForm;
+import com.bsuir.kareley.entity.User;
 import com.bsuir.kareley.util.PaginatedQuery;
 
 import java.util.Map;

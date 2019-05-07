@@ -2,6 +2,7 @@ package com.bsuir.kareley.service.impl;
 
 import com.bsuir.kareley.dao.api.CourseDao;
 import com.bsuir.kareley.dao.api.UserDao;
+import com.bsuir.kareley.dto.CourseDto;
 import com.bsuir.kareley.entity.Course;
 import com.bsuir.kareley.entity.User;
 import com.bsuir.kareley.exception.ServiceException;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,8 +30,26 @@ public class CourseServiceImpl implements CourseService {
         this.courseValidator = courseValidator;
     }
 
+    private Course mapCourseFromDto(CourseDto courseDto) {
+        User teacher = userDao.findByUserName(courseDto.getTeacher()).orElseThrow(() -> new ServiceException("user.not.found", HttpStatus.NOT_FOUND));
+        return new Course(
+                courseDto.getId(),
+                courseDto.getTitle(),
+                courseDto.getDescription(),
+                courseDto.getParticipantsNumber(),
+                courseDto.getStartDate(),
+                courseDto.getEndDate(),
+                courseDto.getLessonsAmount(),
+                courseDto.getPrice(),
+                teacher,
+                courseDto.getImageUrl(),
+                courseDto.getParticipants()
+        );
+    }
+
     @Override
-    public void create(Course course) {
+    public void create(CourseDto courseDto) {
+        Course course = mapCourseFromDto(courseDto);
         courseValidator.validate(course);
         try {
             courseDao.create(course);
@@ -39,7 +59,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void update(Course course) {
+    public void update(CourseDto courseDto) {
+        Course course = mapCourseFromDto(courseDto);
         courseValidator.validate(course);
         try {
             courseDao.update(course);
@@ -63,7 +84,15 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course findById(int id) {
+    public CourseDto findById(int id) {
+        Optional<Course> optionalCourse = courseDao.findById(id);
+        Course course = optionalCourse.orElseThrow(() -> new ServiceException("course.not.found", HttpStatus.NOT_FOUND));
+        assembleCourse(course);
+        return CourseDto.buildFromCourse(course);
+    }
+
+    @Override
+    public Course findCourseById(int id) {
         Optional<Course> optionalCourse = courseDao.findById(id);
         Course course = optionalCourse.orElseThrow(() -> new ServiceException("course.not.found", HttpStatus.NOT_FOUND));
         assembleCourse(course);
@@ -78,10 +107,16 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> findAll() {
+    public List<CourseDto> findAll() {
         List<Course> courses = courseDao.findAll();
-        courses.forEach(this::assembleCourse);
-        return courses;
+        return mapDtosFromCourses(courses);
+    }
+
+    private List<CourseDto> mapDtosFromCourses(List<Course> coursesForUser) {
+        coursesForUser.forEach(this::assembleCourse);
+        List<CourseDto> dtos = new ArrayList<>();
+        coursesForUser.forEach(course -> dtos.add(CourseDto.buildFromCourse(course)));
+        return dtos;
     }
 
     @Override
@@ -103,11 +138,9 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> findCoursesForUser(int userId) {
+    public List<CourseDto> findCoursesForUser(int userId) {
         List<Course> coursesForUser = courseDao.findCoursesForUser(userId);
-        coursesForUser.forEach(this::assembleCourse);
-        return coursesForUser;
+        return mapDtosFromCourses(coursesForUser);
     }
-
 
 }

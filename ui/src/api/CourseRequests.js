@@ -30,7 +30,6 @@
     language - the language of response can be "ru" or "en"
     mine - if specified returns courses that the user ordered
 */
-
 export const getCourses = () => {
     return fetch("/api/courses", {
         headers: {
@@ -45,7 +44,6 @@ export const getUserCourses = (token) => {
     return fetch("/api/courses?mine", {
         headers: {
             'Content-Type': 'application/json',
-
             "Authorization": "Bearer " + token,
             'Accept-language': "ru"
         }

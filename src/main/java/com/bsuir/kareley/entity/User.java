@@ -1,6 +1,6 @@
 package com.bsuir.kareley.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Objects;
 
@@ -8,7 +8,7 @@ public class User implements Identifiable {
 
     private int id;
     private String username;
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     private String firstName;
     private String lastName;
@@ -21,6 +21,10 @@ public class User implements Identifiable {
 
     public User(int id) {
         this.id = id;
+    }
+
+    public User(String username) {
+        this.username = username;
     }
 
     public User(int id, String username, String password, String firstName, String lastName, String email,

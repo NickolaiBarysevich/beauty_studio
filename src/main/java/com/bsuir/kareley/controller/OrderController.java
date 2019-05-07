@@ -5,7 +5,6 @@ import com.bsuir.kareley.entity.Order;
 import com.bsuir.kareley.entity.OrderStatus;
 import com.bsuir.kareley.entity.User;
 import com.bsuir.kareley.entity.UserRole;
-import com.bsuir.kareley.exception.ServiceException;
 import com.bsuir.kareley.security.AuthorizationProvider;
 import com.bsuir.kareley.security.UserPrincipal;
 import com.bsuir.kareley.service.api.OrderService;
@@ -24,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api/orders",
@@ -42,15 +40,15 @@ public class OrderController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Order>> getOrders(@RequestHeader(value = "Authorization", required = false) String authToken,
-                                                 @RequestParam Map<String, String> parameters) {
-        if (parameters.containsKey("mine")) {
-            UserPrincipal userPrincipal = authProvider.validateUser(authToken, UserRole.TEACHER, UserRole.USER, UserRole.ADMIN);
-            return ResponseEntity.ok(orderService.findOrdersForUser(userPrincipal.getId()));
-        } else {
-            authProvider.validateUser(authToken, UserRole.ADMIN);
-            return ResponseEntity.ok(orderService.findAll());
-        }
+    public ResponseEntity<List<Order>> getALLOrders(@RequestHeader(value = "Authorization", required = false) String authToken) {
+        authProvider.validateUser(authToken, UserRole.ADMIN);
+        return ResponseEntity.ok(orderService.findAll());
+    }
+
+    @GetMapping(params = "mine")
+    public ResponseEntity<List<Order>> getOrders(@RequestHeader(value = "Authorization", required = false) String authToken) {
+        UserPrincipal userPrincipal = authProvider.validateUser(authToken, UserRole.TEACHER, UserRole.USER, UserRole.ADMIN);
+        return ResponseEntity.ok(orderService.findOrdersForUser(userPrincipal.getId()));
     }
 
     @PostMapping
