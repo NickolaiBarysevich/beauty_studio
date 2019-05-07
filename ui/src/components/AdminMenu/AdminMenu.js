@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import AdminCourses from '../AdminCourses/AdminCourses';
+import AdminCourseAdd from '../AdminCourseAdd/AdminCourseAdd'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'jquery/dist/jquery'
@@ -28,14 +29,19 @@ class AdminMenu extends Component {
             <div className="container">
                 <div className="row control-panel">
                     <div className="col">
+                        <AdminCourseAdd/>
                         {
                             this.state.currentTab === "courses"
-                                ? <button className="btn btn-primary">Добавить курс</button>
+                                ? <button type="button" className="btn btn-primary" data-dismiss="modal"
+                                          onClick={() => $(document).ready(function () {
+                                              $('#courseAddModal').modal('show');
+                                          })}>Добавить курс</button>
                                 : ""
                         }
                     </div>
                     <div className="col-6">
-                        <div className="alert-margin alert alert-danger alert-dismissible fade show courses-alert" role="alert">
+                        <div className="alert-margin alert alert-danger alert-dismissible fade show courses-alert"
+                             role="alert">
                             {this.state.error}
                             <button type="button" className="close" onClick={() => $(".alert").hide()}
                                     aria-label="Close">
@@ -60,7 +66,6 @@ class AdminMenu extends Component {
                 </div>
 
                 <div className="row">
-
                     {
                         this.state.currentTab === "courses"
                             ? <AdminCourses handleError={this.handleError}/>

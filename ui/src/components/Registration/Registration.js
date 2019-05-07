@@ -39,7 +39,6 @@ class Registration extends Component {
     };
 
     handleSignUp = () => {
-        console.log(this.state);
         signUp(this.state)
             .then(response => {
                 if (response.status === 201) {

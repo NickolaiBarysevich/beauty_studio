@@ -22,7 +22,9 @@ const AdminCourseView = ({course, id}) => {
                         <p>Цена: {course.price}</p>
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" data-dismiss="modal" data-target={id}>Закрыть</button>
+                        <button type="button" className="btn btn-secondary" data-dismiss="modal"
+                                data-target={id}>Закрыть
+                        </button>
                     </div>
                 </div>
             </div>

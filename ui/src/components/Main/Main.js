@@ -7,9 +7,9 @@ import Courses from '../Courses/Courses';
 const Main = () => {
     return (
         <main>
-            <Intro />
-            <AboutUs />
-            <Courses />
+            <Intro/>
+            <AboutUs/>
+            <Courses/>
         </main>
     )
 }

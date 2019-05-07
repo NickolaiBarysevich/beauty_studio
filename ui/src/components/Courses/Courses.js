@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-
 // import {getCourses} from "../../api/CourseRequests";
 import Course from '../Course/Course';
 
@@ -13,7 +12,6 @@ class Courses extends Component {
             courseList: null
         }
     }
-
 
 
     // componentWillMount() {

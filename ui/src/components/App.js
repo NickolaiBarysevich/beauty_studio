@@ -8,11 +8,11 @@ import {connect} from "react-redux";
 
 const App = ({role}) => (
     <div id="content">
-        <Header />
+        <Header/>
         {
             role === "ADMIN"
-            ? <AdminMenu />
-            : <Main />
+                ? <AdminMenu/>
+                : <Main/>
         }
     </div>
 );

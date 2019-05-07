@@ -32,8 +32,8 @@ class AdminCourses extends Component {
         const courses = this.state.courses.map(course =>
             <AdminCourse course={course} refresh={this.getCourses}/>
         );
-        return(
-            <div className="card-deck">
+        return (
+            <div className="card-columns">
                 {courses}
             </div>
         )

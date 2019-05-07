@@ -10,13 +10,13 @@ export const authorizationReducer = (state = initialState, action) => {
             return {
                 username: action.username,
                 token: action.token,
-                role : action.role
+                role: action.role
             };
         case "LOGOUT":
             return {
                 username: null,
                 token: null,
-                role : null
+                role: null
             };
         default:
             return state;
