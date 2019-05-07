@@ -18,6 +18,15 @@ nav {
       a {
         color: #fff;
         text-decoration: none;
+
+        &:hover {
+          color: #fff;
+          text-decoration: none;
+        }
+
+        &#navbarDropdown:after {
+          vertical-align: middle;
+        }
       }
     }
   }

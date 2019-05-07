@@ -35,13 +35,17 @@ class Login extends Component {
                     }
                     <div className="dropdown-divider"/>
                     <form>
-                        <a className="dropdown-item" onClick={this.toggleSignIn} href="#">
-                            {
-                                this.state.signIn
-                                    ? "Впервые здесь? Зарегистрируйся"
-                                    : "У меня уже есть аккаунт"
-                            }
-                        </a>
+                        {
+                            this.state.signIn ? (
+                                <a className="dropdown-item" onClick={this.toggleSignIn} href="#">
+                                    Впервые здесь? <span>Зарегистрироваться</span>
+                                </a>
+                                ) : (
+                                <a className="dropdown-item" onClick={this.toggleSignIn} href="#">
+                                    У меня уже есть аккаунт
+                                </a>
+                            )
+                        }
                     </form>
                 </div>
             </li>

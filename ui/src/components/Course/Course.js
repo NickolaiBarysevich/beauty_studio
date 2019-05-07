@@ -21,7 +21,7 @@ class Course extends Component {
                 <img src={imgUrl} className="card-img-top" alt={keyName}/>
                 <div className="card-body">
                     <h5 className="card-title">{title}</h5>
-                    <button className="btn btn-primary">Подробнее</button>
+                    <button className="btn btn-outline-info">Подробнее</button>
                 </div>
             </div>
         )

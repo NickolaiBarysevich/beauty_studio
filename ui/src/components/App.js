@@ -5,6 +5,7 @@ import AdminMenu from './AdminMenu/AdminMenu'
 
 import './App.scss';
 import {connect} from "react-redux";
+import Footer from "./Footer/Footer";
 
 const App = ({role}) => (
     <div id="content">
@@ -14,6 +15,7 @@ const App = ({role}) => (
                 ? <AdminMenu/>
                 : <Main/>
         }
+        <Footer />
     </div>
 );
 
