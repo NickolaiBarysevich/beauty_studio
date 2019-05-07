@@ -30,10 +30,22 @@
     language - the language of response can be "ru" or "en"
     mine - if specified returns courses that the user ordered
 */
-export const getCourses = (token, mine) => {
-    return fetch("/api/courses" +  (mine  ? "?mine" : ""), {
+
+export const getCourses = () => {
+    return fetch("/api/courses", {
         headers: {
             'Content-Type': 'application/json',
+            'Accept-language': "ru"
+        }
+    }).then(response => response.json())
+
+};
+
+export const getUserCourses = (token) => {
+    return fetch("/api/courses?mine", {
+        headers: {
+            'Content-Type': 'application/json',
+
             "Authorization": "Bearer " + token,
             'Accept-language': "ru"
         }
@@ -78,9 +90,8 @@ export const createCourse = (parameters, token) => {
             endDate: parameters.endDate,
             lessonsAmount: parameters.lessonsAmount,
             price: parameters.price,
-            teacher: {
-                id: parameters.teacherId
-            }
+            teacher: parameters.teacher,
+            imageUrl: parameters.imageUrl
         })
     })
         .then(response => response.json())
@@ -105,7 +116,7 @@ export const deleteCourse = (id, token) => {
             'Accept-language': "ru"
         }
     })
-        .then(response => response.ok ? "ok" : response.json())
+        .then(response => response.status === 200 ? {status: 200} : response.json())
 };
 
 /*
@@ -146,9 +157,8 @@ export const updateCourse = (course, token) => {
             endDate: course.endDate,
             lessonsAmount: course.lessonsAmount,
             price: course.price,
-            teacher: {
-                id: course.teacherId
-            }
+            teacher: course.teacher,
+            imageUrl: course.imageUrl
         })
     })
         .then(response => response.json())

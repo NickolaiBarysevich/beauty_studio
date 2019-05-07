@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-
 // import {getCourses} from "../../api/CourseRequests";
+
 import Course from '../Course/Course';
 
 import './Courses.scss';
@@ -13,6 +13,7 @@ class Courses extends Component {
             courseList: null
         }
     }
+
 
     // componentWillMount() {
     //     this.setCourses()

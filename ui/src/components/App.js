@@ -1,15 +1,24 @@
 import React from 'react';
 import Header from './Header/Header';
 import Main from './Main/Main';
+import AdminMenu from './AdminMenu/AdminMenu'
 
 import './App.scss';
+import {connect} from "react-redux";
 
-
-const App = () => (
+const App = ({role}) => (
     <div id="content">
         <Header />
-        <Main />
+        {
+            role === "ADMIN"
+            ? <AdminMenu />
+            : <Main />
+        }
     </div>
 );
 
-export default App;
+const mapStateToProps = state => ({
+    ...state.authorizationReducer
+});
+
+export default connect(mapStateToProps)(App);

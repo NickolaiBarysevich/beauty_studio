@@ -67,7 +67,15 @@ export const signUp = (parameters) => {
             phoneNumber: parameters.phoneNumber
         })
     })
-        .then(response => response.json())
+        .then(response => {
+            if (response.status === 201) {
+                return {
+                    status: 201
+                }
+            } else {
+                return response.json();
+            }
+        })
 };
 
 /*
