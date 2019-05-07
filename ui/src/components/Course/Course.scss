@@ -1,0 +1,38 @@
+.card {
+  min-height: 390px;
+  margin-right: 0;
+
+  &-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+
+    h5 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .btn {
+      border: 1px solid #000;
+      background-color: #fff;
+
+      color: #000;
+
+      &:hover {
+        background-color: #ffe7de;
+      }
+
+      &:active {
+        border-color: #000 !important;
+        color: #000 !important;
+        background-color: #ffcebd !important;
+        outline: none !important;
+      }
+
+      &:focus {
+        box-shadow: none !important;
+      }
+    }
+  }
+}
