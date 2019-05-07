@@ -53,6 +53,7 @@ public class CourseServiceImpl implements CourseService {
         courseValidator.validate(course);
         try {
             courseDao.create(course);
+            courseDto.setId(course.getId());
         } catch (Exception e) {
             throw new ServiceException("title.duplicate", HttpStatus.BAD_REQUEST);
         }

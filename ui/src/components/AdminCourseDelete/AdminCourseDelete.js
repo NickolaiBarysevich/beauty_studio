@@ -16,9 +16,12 @@ class AdminCourseDelete extends Component {
     handleDeleteCourse = () => {
         deleteCourse(this.props.courseId, this.props.token)
             .then(response => {
-                if (response.code === 200) {
+                if (response.status === 200) {
                     this.props.refresh();
                     $(this.props.id).hide();
+                    $(document).ready(() => {
+                        $('#' + this.props.id).modal('hide');
+                    })
                 } else {
                     this.setState({error: response.message});
                     $(".alert").show()
@@ -53,6 +56,8 @@ class AdminCourseDelete extends Component {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-danger"
+                                    data-dismiss="modal"
+                                    data-target={this.props.id}
                                     onClick={this.handleDeleteCourse}>Удалить
                             </button>
                             <button type="button" className="btn btn-secondary" data-dismiss="modal"

@@ -1,4 +1,3 @@
-
 /*
     Signs user in.
     Response example:
@@ -88,7 +87,7 @@ export const signUp = (parameters) => {
     language - the language of response can be "ru" or "en"
 */
 export const setUserRole = (userId, role, token) => {
-    const url = '/api/users/' + userId + "?role=" + role ;
+    const url = '/api/users/' + userId + "?role=" + role;
     return fetch(url, {
         method: 'PUT',
         headers: {
@@ -139,7 +138,7 @@ export const setUserRole = (userId, role, token) => {
     language - the language of response can be "ru" or "en""
 */
 export const getUsers = (rowsAmount, startRow, token) => {
-    const url = '/api/users/?limit=' + rowsAmount + "&offset=" + startRow ;
+    const url = '/api/users/?limit=' + rowsAmount + "&offset=" + startRow;
     return fetch(url, {
         method: 'GET',
         headers: {

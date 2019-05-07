@@ -1,66 +1,66 @@
 .aboutUs {
-    position: relative;
-    height: 100vh;
+  position: relative;
+  height: 100vh;
 
-    overflow: hidden;
+  overflow: hidden;
 
-    &_description {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+  &_description {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
-        z-index: 5;
+    z-index: 5;
 
-        h2 {
-            padding: 70px 0 35px;
+    h2 {
+      padding: 70px 0 35px;
 
-            text-align: center;
-            color: white;
-            font-size: 40px;
-        }
-
-        p {
-            width: 70vw;
-            margin: 0 auto;
-
-            text-align: justify;
-            color: white;
-            font-size: 24px;
-        }
+      text-align: center;
+      color: white;
+      font-size: 40px;
     }
 
-    .blur {
-        margin: -5px;
-        z-index: 1;
+    p {
+      width: 70vw;
+      margin: 0 auto;
 
-        background: #00000047 url('./body_img.jpg');
-        background-blend-mode: darken;
-        background-attachment: fixed;
-        background-position: center center;
-        background-repeat: no-repeat;
-        background-size: cover;
-
-        filter: blur(5px);
+      text-align: justify;
+      color: white;
+      font-size: 24px;
     }
- }
+  }
+
+  .blur {
+    margin: -5px;
+    z-index: 1;
+
+    background: #00000047 url('./body_img.jpg');
+    background-blend-mode: darken;
+    background-attachment: fixed;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    filter: blur(5px);
+  }
+}
 
 .aboutUs .blur,
 .aboutUs_description {
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
 }
 
 @media (max-width: 1024px) {
-    .aboutUs h2 {
-        padding: 40px 0 20px;
-    }
+  .aboutUs h2 {
+    padding: 40px 0 20px;
+  }
 }
 
 @media (max-width: 800px) {
-    .aboutUs p {
-        font-size: 20px;
-    }
+  .aboutUs p {
+    font-size: 20px;
+  }
 }

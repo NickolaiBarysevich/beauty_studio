@@ -25,7 +25,6 @@ class SignIn extends Component {
     handleSignIn = () => {
         signIn(this.state.username, this.state.password)
             .then(response => {
-                console.log(response);
                 if (!response.errorCode) {
                     this.props.addUser(
                         response.username,

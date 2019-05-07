@@ -6,8 +6,8 @@ const Intro = () => {
         <section className="intro">
             <h1>
                 KARELEY<br/>
-                 ESTETIC<br/>
-                  LOUNGE
+                ESTETIC<br/>
+                LOUNGE
             </h1>
         </section>
     )

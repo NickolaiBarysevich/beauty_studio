@@ -1,53 +1,53 @@
 import React, {Component} from "react"
 import {AvField, AvForm} from "availity-reactstrap-validation";
-import {updateCourse} from "../../api/CourseRequests";
+import {createCourse} from "../../api/CourseRequests";
 import {connect} from "react-redux";
-import $ from 'jquery'
+import $ from "jquery";
 
-class AdminCourseEdit extends Component {
+class AdminCourseAdd extends Component {
 
     state = {
-        id: this.props.course.id,
-        title: this.props.course.title,
-        description: this.props.course.description,
-        participantsNumber: this.props.course.participantsNumber,
-        startDate: this.props.course.startDate,
-        endDate: this.props.course.endDate,
-        lessonsAmount: this.props.course.lessonsAmount,
-        price: this.props.course.price,
-        teacher: this.props.course.teacher,
-        imageUrl: this.props.course.imageUrl,
+        id: '',
+        title: '',
+        description: '',
+        participantsNumber: '',
+        startDate: '',
+        endDate: '',
+        lessonsAmount: '',
+        price: '',
+        teacher: '',
+        imageUrl: '',
 
         error: null
     };
 
     componentDidMount() {
-        $(".alert").hide()
+        $(".alert-add").hide()
     }
 
-    handleUpdateCourse = () => {
-        updateCourse(this.state, this.props.token)
+    handleCreateCourse = () => {
+        createCourse(this.state, this.props.token)
             .then(response => {
                 if (!response.errorCode) {
-                    this.props.refresh();
                     $(document).ready(() => {
-                        $('#' + this.props.id).modal('hide');
+                        $('#courseAddModal').modal('hide');
                     });
+                    window.location.reload()
                 } else {
                     this.setState({error: response.message});
-                    $(".alert").show()
+                    $(".alert-add").show()
                 }
             })
             .catch(err => {
                 this.setState({error: "Сервер недоступен"});
-                $(".alert").show();
+                $(".alert-add").show();
             })
     };
 
     render() {
         return (
-            <div className="modal fade" tabIndex="-1" role="dialog" id={this.props.id}>
-                <AvForm onValidSubmit={this.handleUpdateCourse}>
+            <div className="modal fade" tabIndex="-1" role="dialog" id="courseAddModal">
+                <AvForm onValidSubmit={this.handleCreateCourse}>
                     <div className="modal-dialog" role="document">
                         <div className="modal-content">
                             <div className="modal-header">
@@ -57,7 +57,7 @@ class AdminCourseEdit extends Component {
                                 </button>
                             </div>
                             <div className="modal-body">
-                                <div className="alert alert-danger alert-dismissible fade show" role="alert">
+                                <div className="alert alert-danger alert-dismissible fade show alert-add" role="alert">
                                     {this.state.error}
                                     <button type="button" className="close" onClick={() => $(".alert").hide()}
                                             aria-label="Close">
@@ -223,11 +223,11 @@ class AdminCourseEdit extends Component {
                                     }}/>
                             </div>
                             <div className="modal-footer">
-                                <button type="submit" className="btn btn-warning">
-                                    Редактировать
+                                <button type="submit" className="btn btn-primary">
+                                    Добавить
                                 </button>
                                 <button type="button" className="btn btn-secondary" data-dismiss="modal"
-                                        data-target={this.props.id}>
+                                        data-target="#courseAddModal">
                                     Закрыть
                                 </button>
                             </div>
@@ -243,4 +243,4 @@ const mapStateToProps = state => ({
     ...state.authorizationReducer
 });
 
-export default connect(mapStateToProps)(AdminCourseEdit);
+export default connect(mapStateToProps)(AdminCourseAdd);
