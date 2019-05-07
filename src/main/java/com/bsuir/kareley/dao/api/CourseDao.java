@@ -1,6 +1,7 @@
 package com.bsuir.kareley.dao.api;
 
 import com.bsuir.kareley.entity.Course;
+
 import java.util.List;
 
 public interface CourseDao extends Dao<Course> {

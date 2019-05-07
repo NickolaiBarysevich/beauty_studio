@@ -6,7 +6,7 @@ import com.bsuir.kareley.util.PaginatedQuery;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserDao extends Dao<User>{
+public interface UserDao extends Dao<User> {
 
     List<User> findParticipantsByCourseId(int id);
 

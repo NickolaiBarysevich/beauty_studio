@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,6 +20,7 @@ public class Course implements Identifiable {
     private int lessonsAmount;
     private BigDecimal price;
     private User teacher;
+    private String imageUrl;
     private List<User> participants;
 
     public Course() {
@@ -31,7 +31,7 @@ public class Course implements Identifiable {
     }
 
     public Course(int id, String title, String description, int participantsNumber, LocalDate startDate,
-                  LocalDate endDate, int lessonsAmount, BigDecimal price, User teacher) {
+                  LocalDate endDate, int lessonsAmount, BigDecimal price, User teacher, String imageUrl) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -41,10 +41,11 @@ public class Course implements Identifiable {
         this.lessonsAmount = lessonsAmount;
         this.price = price;
         this.teacher = teacher;
+        this.imageUrl = imageUrl;
     }
 
     public Course(String title, String description, int participantsNumber, LocalDate startDate, LocalDate endDate,
-                  int lessonsAmount, BigDecimal price, User teacher, List<User> participants) {
+                  int lessonsAmount, BigDecimal price, User teacher, String imageUrl, List<User> participants) {
         this.title = title;
         this.description = description;
         this.participantsNumber = participantsNumber;
@@ -53,10 +54,11 @@ public class Course implements Identifiable {
         this.lessonsAmount = lessonsAmount;
         this.price = price;
         this.teacher = teacher;
+        this.imageUrl = imageUrl;
         this.participants = participants;
     }
 
-    public Course(int id, String title, String description, int participantsNumber, LocalDate startDate, LocalDate endDate, int lessonsAmount, BigDecimal price, User teacher, List<User> participants) {
+    public Course(int id, String title, String description, int participantsNumber, LocalDate startDate, LocalDate endDate, int lessonsAmount, BigDecimal price, User teacher, String imageUrl, List<User> participants) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -66,6 +68,7 @@ public class Course implements Identifiable {
         this.lessonsAmount = lessonsAmount;
         this.price = price;
         this.teacher = teacher;
+        this.imageUrl = imageUrl;
         this.participants = participants;
     }
 
@@ -147,6 +150,14 @@ public class Course implements Identifiable {
 
     public void setParticipants(List<User> participants) {
         this.participants = participants;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     @Override

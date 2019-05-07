@@ -10,17 +10,16 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 @Component
 public class SignUpFormValidator implements EntityValidator<SignUpForm> {
 
-    private static final String USERNAME_PATTERN = "^[a-z0-9_-]{3,15}$";
     private static final String PASSWORD_PATTERN = "^(?=.*\\d)(?=.*[a-z])(?=.*[A-Z])(?!.*\\s).*$";
     private static final String EMAIL_PATTERN = "^([0-9]{9})|([A-Za-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,3})$";
 
     @Override
     public void validate(SignUpForm signUpForm) {
         String username = signUpForm.getUsername();
-        if (isBlank(username) || !username.matches(USERNAME_PATTERN))
+        if (isBlank(username))
             throw new ServiceException("username.invalid", BAD_REQUEST);
         String password = signUpForm.getPassword();
-        if (isBlank(password)|| !password.matches(PASSWORD_PATTERN))
+        if (isBlank(password) || !password.matches(PASSWORD_PATTERN))
             throw new ServiceException("password.invalid", BAD_REQUEST);
         String email = signUpForm.getEmail();
         if (isBlank(email) || !email.matches(EMAIL_PATTERN))

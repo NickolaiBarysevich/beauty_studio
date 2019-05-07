@@ -7,6 +7,7 @@ import com.bsuir.kareley.entity.Course;
 import com.bsuir.kareley.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -17,9 +18,9 @@ import java.util.List;
 public class CourseDaoImpl extends AbstractDao<Course> implements CourseDao {
 
     private static final String CREATE_QUERY = "INSERT INTO course (title, description, participants_number," +
-            " start_date, end_date, lessons_amount, price, teacher_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            " start_date, end_date, lessons_amount, price, image_url, teacher_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     private static final String UPDATE_QUERY = "UPDATE course SET title = ?, description = ?, participants_number =?, " +
-            "start_date = ?, end_date = ?, lessons_amount = ?, price = ?, teacher_id = ? WHERE id = ?";
+            "start_date = ?, end_date = ?, lessons_amount = ?, price = ?, image_url = ?, teacher_id = ? WHERE id = ?";
     private static final String ADD_PARTICIPANT_QUERY = "INSERT INTO course_user VALUES (?, ?)";
     private static final String REMOVE_PARTICIPANT_QUERY = "DELETE FROM course_user WHERE course_id = ? AND user_id = ?";
     private static final String FIND_USER_COURSES_QUERY = "SELECT * FROM course JOIN course_user AS cu ON course.id = cu.course_id WHERE cu.user_id = ?";
@@ -44,6 +45,7 @@ public class CourseDaoImpl extends AbstractDao<Course> implements CourseDao {
         values.add(course.getEndDate());
         values.add(course.getLessonsAmount());
         values.add(course.getPrice());
+        values.add(course.getImageUrl());
         values.add(course.getTeacher().getId());
         return values;
     }
@@ -71,8 +73,9 @@ public class CourseDaoImpl extends AbstractDao<Course> implements CourseDao {
             LocalDate endDate = rs.getDate("end_date").toLocalDate();
             int lessonsAmount = rs.getInt("lessons_amount");
             BigDecimal price = rs.getBigDecimal("price");
+            String imageUrl = rs.getString("image_url");
             User teacher = new User(rs.getInt("teacher_id"));
-            return new Course(id, title, description, participantsNumber, startDate, endDate, lessonsAmount, price, teacher, new ArrayList<>());
+            return new Course(id, title, description, participantsNumber, startDate, endDate, lessonsAmount, price, teacher, imageUrl, new ArrayList<>());
         };
     }
 

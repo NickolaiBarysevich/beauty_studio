@@ -30,8 +30,18 @@ public class UserServiceImpl implements UserService {
         try {
             userDao.create(user);
         } catch (Exception e) {
-            throw new ServiceException("username.duplicate", HttpStatus.BAD_REQUEST);
+            throw new ServiceException(defineDuplicate(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    private String defineDuplicate(String exceptionMessage) {
+        if (exceptionMessage.contains("phone_number_UNIQUE"))
+            return "phoneNumber.duplicate";
+        if (exceptionMessage.contains("username_UNIQUE"))
+            return "username.duplicate";
+        if (exceptionMessage.contains("email_UNIQUE"))
+            return "email.duplicate";
+        throw new RuntimeException(exceptionMessage);
     }
 
     @Override

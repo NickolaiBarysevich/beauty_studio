@@ -1,19 +1,18 @@
 package com.bsuir.kareley.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import java.time.LocalDateTime;
+import com.bsuir.kareley.entity.UserRole;
 
 public class AuthorizationResponse {
 
     private String username;
     private String token;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime expirationDate;
+    private UserRole userRole;
 
-    public AuthorizationResponse(String username, String token, LocalDateTime expirationDate) {
+
+    public AuthorizationResponse(String username, String token, UserRole userRole) {
         this.username = username;
         this.token = token;
-        this.expirationDate = expirationDate;
+        this.userRole = userRole;
     }
 
     public String getUsername() {
@@ -32,11 +31,11 @@ public class AuthorizationResponse {
         this.token = token;
     }
 
-    public LocalDateTime getExpirationDate() {
-        return expirationDate;
+    public UserRole getUserRole() {
+        return userRole;
     }
 
-    public void setExpirationDate(LocalDateTime expirationDate) {
-        this.expirationDate = expirationDate;
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
     }
 }

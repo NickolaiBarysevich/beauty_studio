@@ -10,8 +10,6 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.stream.Stream;
 
@@ -84,7 +82,7 @@ public class AuthorizationProvider {
                 .setExpiration(expirationDate)
                 .signWith(SignatureAlgorithm.HS512, SECRET)
                 .compact();
-        return new AuthorizationResponse(user.getUsername(), token, LocalDateTime.ofInstant(expirationDate.toInstant(), ZoneId.systemDefault()));
+        return new AuthorizationResponse(user.getUsername(), token, user.getRole());
     }
 
 }
