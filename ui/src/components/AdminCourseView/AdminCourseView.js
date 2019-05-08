@@ -1,4 +1,5 @@
 import React from "react"
+import AdminCourseParticipants from '../AdminCourseParticipants/AdminCourseParticipants'
 
 const AdminCourseView = ({course, id}) => {
     return (
@@ -7,7 +8,7 @@ const AdminCourseView = ({course, id}) => {
                 <div className="modal-content">
                     <div className="modal-header">
                         <h5 className="modal-title">Курс</h5>
-                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" className="close" data-dismiss="modal" data-target={id} aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -20,6 +21,8 @@ const AdminCourseView = ({course, id}) => {
                         <p>Конец курса: {course.endDate}</p>
                         <p>Количество занятий: {course.lessonsAmount}</p>
                         <p>Цена: {course.price}</p>
+                        <p>Преподаватель: {course.teacher.username ? course.teacher.username : course.teacher}</p>
+                        <p><AdminCourseParticipants participants={course.participants} /></p>
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" data-dismiss="modal"

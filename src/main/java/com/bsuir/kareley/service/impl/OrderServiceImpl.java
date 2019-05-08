@@ -12,6 +12,7 @@ import com.bsuir.kareley.service.api.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -74,17 +75,20 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order updateStatus(int orderId, String statusValue) {
-        String status = statusValue.toUpperCase();
-        if (status.equals("APPROVED") || status.equals("CANCELED") || status.equals("PROCESSING")) {
-            OrderStatus orderStatus = OrderStatus.valueOf(status);
-            Order order = orderDao.findById(orderId).orElseThrow(() -> new ServiceException("order.not.found", HttpStatus.NOT_FOUND));
-            assembleOrder(order);
-            order.setOrderStatus(orderStatus);
-            orderDao.update(order);
-            return order;
-        } else {
-            throw new ServiceException("order.status.unknown", HttpStatus.BAD_REQUEST);
-        }
+    @Transactional
+    public Order approveOrder(int orderId, int courseId) {
+        Order order = findById(orderId);
+        order.setOrderStatus(OrderStatus.APPROVED);
+        courseService.addParticipant(courseId, order.getCustomer().getId());
+        update(order);
+        return order;
+    }
+
+    @Override
+    public Order cancelOrder(int orderId) {
+        Order order = findById(orderId);
+        order.setOrderStatus(OrderStatus.CANCELED);
+        update(order);
+        return order;
     }
 }

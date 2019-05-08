@@ -19,7 +19,7 @@ public class OrderDaoImpl extends AbstractDao<Order> implements OrderDao {
 
     private static final String CREATE_QUERY = "INSERT INTO course_order (order_time, user_id, course_id, order_status) VALUES (?, ?, ?, ?)";
     private static final String UPDATE_QUERY = "UPDATE course_order SET order_status = ? WHERE id = ?";
-    private static final String FIND_ORDERS_FOR_USER_QUERY = "SELECT * FROM course_order WHERE user_id = ?";
+    private static final String FIND_ORDERS_FOR_USER_QUERY = "SELECT * FROM course_order WHERE user_id = ? ORDER BY order_time DESC";
 
     @Override
     protected Query getCreateQuery(Order order) {
@@ -62,5 +62,10 @@ public class OrderDaoImpl extends AbstractDao<Order> implements OrderDao {
     @Override
     public List<Order> findOrdersForUser(int userId) {
         return executeQuery(FIND_ORDERS_FOR_USER_QUERY, userId);
+    }
+
+    @Override
+    public List<Order> findAll() {
+        return executeQuery("SELECT * FROM course_order ORDER BY order_time DESC");
     }
 }

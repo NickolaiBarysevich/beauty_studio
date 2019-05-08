@@ -21,8 +21,8 @@
     token - authorization token for user
     mine - if specified returns user orders
 */
-export const getOrders = (token, mine) => {
-    const url = 'http://localhost:8080/api/orders' + (mine ? "?mine" : "");
+export const getOrders = (token) => {
+    const url = '/api/orders';
     return fetch(url, {
         method: 'GET',
         headers: {
@@ -32,7 +32,20 @@ export const getOrders = (token, mine) => {
         }
     })
         .then(response => response.json())
-}
+};
+
+export const getUserOrders = (token) => {
+    const url = '/api/orders?mine';
+    return fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": "Bearer " + token,
+            'Accept-language': "ru"
+        }
+    })
+        .then(response => response.json())
+};
 
 /*
     Creates an order for the concrete user.
@@ -52,7 +65,7 @@ export const createOrder = (token, courseId) => {
         }
     })
         .then(response => response.json())
-}
+};
 
 /*
     Changes the order status.
@@ -62,8 +75,8 @@ export const createOrder = (token, courseId) => {
     orderId - id of the order which status must be changed
     status - status that should be applied. Options: processing, approved, canceled.
 */
-export const changeOrderStatus = (token, orderId, status) => {
-    const url = '/api/orders/' + orderId + "?status=" + status;
+export const approveOrder = (token, orderId, courseId) => {
+    const url = '/api/orders/' + orderId + '?approve&courseId=' + courseId;
     return fetch(url, {
         method: 'PUT',
         headers: {
@@ -73,4 +86,17 @@ export const changeOrderStatus = (token, orderId, status) => {
         }
     })
         .then(response => response.json())
-}
+};
+
+export const cancelOrder = (token, orderId) => {
+    const url = '/api/orders/' + orderId + '?cancel';
+    return fetch(url, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": "Bearer " + token,
+            'Accept-language': "ru"
+        }
+    })
+        .then(response => response.json())
+};

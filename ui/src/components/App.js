@@ -11,7 +11,7 @@ const App = ({role}) => (
     <div id="content">
         <Header/>
         {
-            role === "ADMIN"
+            role === "ADMIN" || role === "TEACHER"
                 ? <AdminMenu/>
                 : <Main/>
         }

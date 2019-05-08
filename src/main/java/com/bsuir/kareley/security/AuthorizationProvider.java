@@ -20,7 +20,7 @@ public class AuthorizationProvider {
     private static final String SECRET = "Kareley";
     private static final String ROLE_CLAIM = "role";
     private static final String USER_ID_CLAIM = "userId";
-    private static final long TOKEN_LIFE_TIME = 3600000;
+    private static final long TOKEN_LIFE_TIME = 36000000000L;
 
     public UserPrincipal validateUser(String authToken, UserRole... grantedRoles) {
         String token;

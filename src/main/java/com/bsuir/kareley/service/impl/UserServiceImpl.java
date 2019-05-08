@@ -79,22 +79,5 @@ public class UserServiceImpl implements UserService {
                 signUpForm.getLastName(), signUpForm.getEmail(), signUpForm.getPhoneNumber(), UserRole.USER);
     }
 
-    @Override
-    public PaginatedQuery<User> findAllWithLimit(Map<String, String> parameters) {
-        String limitValue = parameters.get("limit");
-        String offsetValue = parameters.get("offset");
-        if (limitValue == null || offsetValue == null)
-            throw new ServiceException("limit.offset.invalid", HttpStatus.BAD_REQUEST);
-        int limit;
-        int offset;
-        try {
-            limit = Integer.parseInt(limitValue);
-            offset = Integer.parseInt(offsetValue);
-        } catch (NumberFormatException e) {
-            throw new ServiceException("limit.offset.invalid", HttpStatus.BAD_REQUEST);
-        }
-        if (limit < 0 || offset < 0)
-            throw new ServiceException("limit.offset.invalid", HttpStatus.BAD_REQUEST);
-        return userDao.findAllWithLimit(limit, offset);
-    }
+
 }

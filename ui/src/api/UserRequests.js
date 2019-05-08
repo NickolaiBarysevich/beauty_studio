@@ -100,7 +100,6 @@ export const setUserRole = (userId, role, token) => {
 }
 
 /*
-    Returns the list of user. Can be paginated.
     Available for admin only.
     Response example:
 
@@ -132,13 +131,10 @@ export const setUserRole = (userId, role, token) => {
     users in database. The value "totalRows" provided for an opportunity
     of creation of pagination interface.
 
-    rowsAmount - amount of rows that should be returned
-    startRow - number of the first row in the returning list
     token - authorization token for user
-    language - the language of response can be "ru" or "en""
 */
-export const getUsers = (rowsAmount, startRow, token) => {
-    const url = '/api/users/?limit=' + rowsAmount + "&offset=" + startRow;
+export const getUsers = token => {
+    const url = '/api/users/';
     return fetch(url, {
         method: 'GET',
         headers: {
