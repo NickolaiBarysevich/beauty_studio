@@ -31,8 +31,6 @@ class Courses extends Component {
     render() {
         return (
             <section className="courses" id="courses">
-                <div className="blur"></div>
-
                 <div className="courses_content container">
                     <div className="row">
                         <div className="col-sm">
