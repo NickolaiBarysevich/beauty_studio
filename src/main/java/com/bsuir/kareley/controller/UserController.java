@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
 
@@ -76,7 +77,7 @@ public class UserController {
         }
         UserRole userRole = UserRole.valueOf(role.toUpperCase());
         if (userRole == UserRole.ADMIN)
-            throw new ServiceException("operation.unavailable", HttpStatus.FORBIDDEN);
+            throw new ServiceException("operation.unavailable", HttpStatus.BAD_REQUEST);
         User user = userService.findById(id);
         user.setRole(userRole);
         userService.update(user);
@@ -84,9 +85,8 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<PaginatedQuery<User>> getUsers(@RequestParam Map<String, String> parameters,
-                                                         @RequestHeader(value = "Authorization", required = false) String authToken) {
+    public ResponseEntity<List<User>> getUsers(@RequestHeader(value = "Authorization", required = false) String authToken) {
         authProvider.validateUser(authToken, UserRole.ADMIN);
-        return ResponseEntity.ok(userService.findAllWithLimit(parameters));
+        return ResponseEntity.ok(userService.findAll());
     }
 }

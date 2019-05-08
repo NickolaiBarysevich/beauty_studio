@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,7 +42,7 @@ public class OrderController {
 
     @GetMapping
     public ResponseEntity<List<Order>> getALLOrders(@RequestHeader(value = "Authorization", required = false) String authToken) {
-        authProvider.validateUser(authToken, UserRole.ADMIN);
+        authProvider.validateUser(authToken, UserRole.ADMIN, UserRole.TEACHER);
         return ResponseEntity.ok(orderService.findAll());
     }
 
@@ -60,10 +61,18 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(orderService.findById(order.getId()));
     }
 
-    @PutMapping("/{id}")
-    private ResponseEntity<Order> changeStatus(@RequestHeader(value = "Authorization", required = false) String authToken,
-                                               @PathVariable int id, @RequestParam String status) {
+    @PutMapping(value = "/{id}", params = "approve")
+    private ResponseEntity<Order> approveOrder(@RequestHeader(value = "Authorization", required = false) String authToken,
+                                               @PathVariable int id,
+                                               @RequestParam int courseId) {
         authProvider.validateUser(authToken, UserRole.ADMIN);
-        return ResponseEntity.ok(orderService.updateStatus(id, status));
+        return ResponseEntity.ok(orderService.approveOrder(id, courseId));
+    }
+
+    @PutMapping(value = "/{id}", params = "cancel")
+    private ResponseEntity<Order> cancelOrder(@RequestHeader(value = "Authorization", required = false) String authToken,
+                                               @PathVariable int id) {
+        authProvider.validateUser(authToken, UserRole.ADMIN);
+        return ResponseEntity.ok(orderService.cancelOrder(id));
     }
 }

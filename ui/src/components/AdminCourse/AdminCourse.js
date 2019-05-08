@@ -3,11 +3,12 @@ import AdminCourseView from '../AdminCourseView/AdminCourseView';
 import AdminCourseEdit from '../AdminCourseEdit/AdminCourseEdit';
 import AdminCourseDelete from '../AdminCourseDelete/AdminCourseDelete'
 import './AdminCourse.scss'
+import {connect} from "react-redux";
 
 class AdminCourse extends Component {
 
     render() {
-        const course = this.props.course;
+        const {course, role} = this.props;
         return (
             <div className="card">
                 <img src={course.imageUrl} className="card-img-top" alt="..."/>
@@ -26,12 +27,21 @@ class AdminCourse extends Component {
                         <button type="button" className="btn btn-outline-success" data-toggle="modal"
                                 data-target={"#courseViewModal-" + course.id}>Подробнее
                         </button>
-                        <button type="button" className="btn btn-outline-warning" data-toggle="modal"
-                                data-target={"#courseEditModal-" + course.id}>Редактировать
-                        </button>
-                        <button type="button" className="btn btn-outline-danger" data-toggle="modal"
-                                data-target={"#courseDeleteModal-" + course.id}>Удалить
-                        </button>
+                        {
+                            role === "ADMIN"
+                                ? <button type="button" className="btn btn-outline-warning" data-toggle="modal"
+                                          data-target={"#courseEditModal-" + course.id}>Редактировать
+                                </button>
+                                : ""
+                        }
+                        {
+                            role === "ADMIN"
+                                ? <button type="button" className="btn btn-outline-danger" data-toggle="modal"
+                                          data-target={"#courseDeleteModal-" + course.id}>Удалить
+                                </button>
+                                : ""
+                        }
+
                     </div>
                 </div>
             </div>
@@ -39,4 +49,7 @@ class AdminCourse extends Component {
     }
 }
 
-export default AdminCourse;
+const mapStateToProps = state => ({
+    ...state.authorizationReducer
+});
+export default connect(mapStateToProps)(AdminCourse);

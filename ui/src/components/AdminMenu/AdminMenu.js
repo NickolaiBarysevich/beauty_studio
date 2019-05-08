@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import AdminCourses from '../AdminCourses/AdminCourses';
 import AdminCourseAdd from '../AdminCourseAdd/AdminCourseAdd'
+import AdminOrdersTable from '../AdminOrdersTable/AdminOrdersTable'
+import AdminUsers from '../AdminUsers/AdminUsers'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'jquery/dist/jquery'
@@ -8,6 +10,7 @@ import 'bootstrap/dist/js/bootstrap'
 import $ from "jquery";
 
 import './AdminMenu.scss'
+import {connect} from "react-redux";
 
 class AdminMenu extends Component {
 
@@ -29,9 +32,13 @@ class AdminMenu extends Component {
             <div className="container">
                 <div className="row control-panel">
                     <div className="col">
-                        <AdminCourseAdd/>
                         {
-                            this.state.currentTab === "courses"
+                            this.props.role === "ADMIN"
+                                ? <AdminCourseAdd/>
+                                : ""
+                        }
+                        {
+                            this.state.currentTab === "courses" && this.props.role === "ADMIN"
                                 ? <button type="button" className="btn btn-primary" data-dismiss="modal"
                                           onClick={() => $(document).ready(function () {
                                               $('#courseAddModal').modal('show');
@@ -61,6 +68,15 @@ class AdminMenu extends Component {
                                 onClick={() => this.setState({currentTab: "orders"})}
                                 className={this.state.currentTab === "orders" ? "btn btn-outline-info active" : "btn btn-outline-info"}>Заказы
                             </button>
+                            {
+                                this.props.role === "ADMIN"
+                                    ? <button
+                                        type="button"
+                                        onClick={() => this.setState({currentTab: "clients"})}
+                                        className={this.state.currentTab === "clients" ? "btn btn-outline-info active" : "btn btn-outline-info"}>Клиенты
+                                    </button>
+                                    : ""
+                            }
                         </div>
                     </div>
                 </div>
@@ -69,7 +85,10 @@ class AdminMenu extends Component {
                     {
                         this.state.currentTab === "courses"
                             ? <AdminCourses handleError={this.handleError}/>
-                            : ""
+                            :
+                            this.state.currentTab === "orders"
+                                ? <AdminOrdersTable handleError={this.handleError}/>
+                                : <AdminUsers handleError={this.handleError}/>
                     }
                 </div>
             </div>
@@ -77,4 +96,8 @@ class AdminMenu extends Component {
     };
 }
 
-export default AdminMenu;
+const mapStateToProps = state => ({
+    ...state.authorizationReducer
+});
+
+export default connect(mapStateToProps)(AdminMenu);

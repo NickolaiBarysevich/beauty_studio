@@ -13,5 +13,4 @@ public interface UserService extends Service<User> {
 
     void createFromForm(SignUpForm signUpForm);
 
-    PaginatedQuery<User> findAllWithLimit(Map<String, String> parameters);
 }
