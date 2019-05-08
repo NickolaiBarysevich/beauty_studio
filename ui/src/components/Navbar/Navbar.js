@@ -1,7 +1,7 @@
-import React from 'react';
-import Login from '../Login/Login'
+import React from "react";
+import Login from "../Login/Login";
 
-import './Navbar.scss';
+import "./Navbar.scss";
 import {connect} from "react-redux";
 import {logout} from "../../authorization/actions/AuthorizationActions";
 

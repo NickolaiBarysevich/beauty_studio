@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
-// import {getCourses} from "../../api/CourseRequests";
+import {getCourses} from "../../api/CourseRequests";
 import Course from '../Course/Course';
+import ModalCourseDescription from '../ModalCourseDescription/ModalCourseDescription';
 
 import './Courses.scss';
 
@@ -9,56 +10,38 @@ class Courses extends Component {
         super(props);
 
         this.state = {
-            courseList: null
+            courseList: []
         }
     }
 
+    componentWillMount() {
+        this.setCourses()
+    }
 
-    // componentWillMount() {
-    //     this.setCourses()
-    // }
-
-    // setCourses = () => {
-    //     getCourses(null, false)
-    //         .then(courses => {
-    //             console.log("in promise: ", courses);  //TODO: remove when checked with backend
-    //             this.setState({courseList: courses});
-    //
-    //         });
-    // };
-
+    setCourses = () => {
+        getCourses()
+            .then(courses => {
+                this.setState({courseList: courses});
+            });
+    };
 
     render() {
+        const courses = this.state.courseList.map((course) =>
+            <div className="col-sm" key={course.id}>
+                <Course
+                    imgUrl={course.imageUrl}
+                    title={course.title}
+                    description={course.description}
+                />
+            </div>
+        );
+
         return (
             <section className="courses" id="courses">
                 <div className="courses_content container">
                     <div className="row">
-                        <div className="col-sm">
-                            <Course
-                                keyName="self_makeup"
-                                imgUrl="https://i.ytimg.com/vi/WZerlq1RYUQ/maxresdefault.jpg"
-                                title={"Базовый курс \"Сам себе визажист\""}
-                                description="self-makeup description"
-                            />
-                        </div>
-
-                        <div className="col-sm">
-                            <Course
-                                keyName="base_makeup"
-                                imgUrl="https://i.ytimg.com/vi/WZerlq1RYUQ/maxresdefault.jpg"
-                                title="Базовый курс профессионального макияжа"
-                                description="base-makeup description"
-                            />
-                        </div>
-
-                        <div className="col-sm">
-                            <Course
-                                keyName="advanced_makeup"
-                                imgUrl="https://i.ytimg.com/vi/WZerlq1RYUQ/maxresdefault.jpg"
-                                title="Повышение квалификации визажистов"
-                                description="advanced-makeup description"
-                            />
-                        </div>
+                        {courses}
+                        <ModalCourseDescription />
                     </div>
                 </div>
             </section>

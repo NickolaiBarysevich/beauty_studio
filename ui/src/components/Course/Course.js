@@ -12,7 +12,7 @@ class Course extends Component {
     }
 
     render() {
-        const {keyName, imgUrl, title, description} = this.props;
+        const {keyName, imgUrl, title} = this.props;
 
         const cardClassname = "card mb-3 " + keyName;
 
@@ -21,7 +21,11 @@ class Course extends Component {
                 <img src={imgUrl} className="card-img-top" alt={keyName}/>
                 <div className="card-body">
                     <h5 className="card-title">{title}</h5>
-                    <button className="btn btn-outline-info">Подробнее</button>
+                    <button className="btn btn-outline-info"
+                            data-toggle="modal"
+                            data-target="#exampleModal">
+                        Подробнее
+                    </button>
                 </div>
             </div>
         )

@@ -5,11 +5,6 @@ import $ from "jquery"
 import './Registration.scss'
 
 class Registration extends Component {
-
-    constructor(props) {
-        super(props);
-    }
-
     state = {
         username: '',
         password: '',

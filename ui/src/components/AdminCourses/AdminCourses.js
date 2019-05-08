@@ -1,19 +1,18 @@
 import React, {Component} from "react"
-import AdminCourse from '../AdminCourse/AdminCourse';
+import AdminCourse from "../AdminCourse/AdminCourse";
 import {getCourses} from "../../api/CourseRequests";
 
-import 'bootstrap/dist/css/bootstrap.min.css'
-import 'jquery/dist/jquery'
-import 'bootstrap/dist/js/bootstrap'
+import "bootstrap/dist/css/bootstrap.min.css";
+import "jquery/dist/jquery";
+import "bootstrap/dist/js/bootstrap";
 
 class AdminCourses extends Component {
-
     state = {
         courses: []
     };
 
     componentWillMount() {
-        this.getCourses()
+        this.getCourses();
     }
 
     getCourses = () => {

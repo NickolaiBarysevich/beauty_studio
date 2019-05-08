@@ -7,11 +7,6 @@ import $ from "jquery"
 import '../Login/Login.scss'
 
 class SignIn extends Component {
-
-    constructor(props) {
-        super(props);
-    }
-
     state = {
         username: '',
         password: '',
