@@ -23,6 +23,6 @@ const ModalCourseDescription = () => {
             </div>
         </div>
     )
-}
+};
 
 export default ModalCourseDescription;

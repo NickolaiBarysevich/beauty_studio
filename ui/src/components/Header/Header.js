@@ -6,10 +6,10 @@ import './Header.scss';
 const Header = () => {
     return (
         <header>
-            <img src={logo} alt="Kareley"/>
+            <a href="/"><img src={logo} alt="Kareley"/></a>
             <Navbar/>
         </header>
     )
-}
+};
 
 export default Header;

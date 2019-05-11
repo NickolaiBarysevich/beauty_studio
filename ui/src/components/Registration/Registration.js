@@ -134,7 +134,7 @@ class Registration extends Component {
                         name="PhoneNumber"
                         type="text"
                         errorMessage="Обязательное поле"
-                        placeholder="номер телефона"
+                        placeholder="Номер телефона"
                         value={this.state.phoneNumber}
                         validate={{
                             required: {value: true},

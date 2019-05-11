@@ -31,7 +31,7 @@ class Courses extends Component {
                 <Course
                     imgUrl={course.imageUrl}
                     title={course.title}
-                    description={course.description}
+                    course={course}
                 />
             </div>
         );
@@ -41,7 +41,7 @@ class Courses extends Component {
                 <div className="courses_content container">
                     <div className="row">
                         {courses}
-                        <ModalCourseDescription />
+
                     </div>
                 </div>
             </section>

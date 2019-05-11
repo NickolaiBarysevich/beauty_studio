@@ -1,28 +1,33 @@
 import React from "react";
 import Login from "../Login/Login";
-
 import "./Navbar.scss";
 import {connect} from "react-redux";
 import {logout} from "../../authorization/actions/AuthorizationActions";
+import history from "../../history/history"
 
-const Navbar = props => {
+const Navbar = ({role, token, logout}) => {
     return (
         <nav>
             <ul>
                 {
-                    props.role !== "ADMIN"
+                    role !== "ADMIN"
                         ? <li><a href='#aboutUs'>О нас</a></li>
                         : ""
                 }
                 {
-                    props.role !== "ADMIN"
+                    role !== "ADMIN"
                         ? <li><a href='#courses'>Наши курсы</a></li>
                         : ""
                 }
                 {
-                    !props.token
+                    role === "USER"
+                        ? <li><a href='/profile'>Личный кабинет</a></li>
+                        : ""
+                }
+                {
+                    !token
                         ? <Login/>
-                        : <li><a href='#' onClick={props.logout}>Выйти</a></li>
+                        : <li><a href='/' onClick={logout}>Выйти</a></li>
                 }
             </ul>
         </nav>
