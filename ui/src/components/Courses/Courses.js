@@ -32,7 +32,9 @@ class Courses extends Component {
                     imgUrl={course.imageUrl}
                     title={course.title}
                     description={course.description}
+                    id={course.id}
                 />
+                <ModalCourseDescription currCourse={course} id={"course-description-" + course.id}/>
             </div>
         );
 
@@ -41,7 +43,6 @@ class Courses extends Component {
                 <div className="courses_content container">
                     <div className="row">
                         {courses}
-                        <ModalCourseDescription />
                     </div>
                 </div>
             </section>

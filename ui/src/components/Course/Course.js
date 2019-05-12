@@ -12,8 +12,7 @@ class Course extends Component {
     }
 
     render() {
-        const {keyName, imgUrl, title} = this.props;
-
+        const {keyName, imgUrl, title, id} = this.props;
         const cardClassname = "card mb-3 " + keyName;
 
         return (
@@ -23,7 +22,7 @@ class Course extends Component {
                     <h5 className="card-title">{title}</h5>
                     <button className="btn btn-outline-info"
                             data-toggle="modal"
-                            data-target="#exampleModal">
+                            data-target={"#course-description-" + id}>
                         Подробнее
                     </button>
                 </div>
