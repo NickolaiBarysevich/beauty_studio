@@ -27,6 +27,8 @@ class UserOrder extends Component {
             return "Курс завершён";
         else if (status === "APPROVED" && new Date() >= new Date(startDate))
             return "Курс начался";
+        else if (status === "APPROVED" && new Date() < new Date(startDate))
+            return "Курс скоро начнется";
         else if (status === "PROCESSING")
             return "Заявка на курс обрабатывается";
         else
