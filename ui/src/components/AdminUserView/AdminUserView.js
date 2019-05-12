@@ -21,7 +21,7 @@ class AdminUserView extends Component {
                 }
             })
             .catch(err => {
-                this.setState({error: "Сервер не доступен"});
+                this.setState({error: "Сервер недоступен"});
                 $(".alert").show()
             });
     };
