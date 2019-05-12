@@ -1,5 +1,6 @@
 import React from "react"
 import AdminCourseParticipants from '../AdminCourseParticipants/AdminCourseParticipants'
+import ReactHtmlParser from 'react-html-parser';
 
 const AdminCourseView = ({course, id}) => {
     return (
@@ -15,7 +16,7 @@ const AdminCourseView = ({course, id}) => {
                     <div className="modal-body">
                         <p>Номер: {course.id}</p>
                         <p>Название: {course.title}</p>
-                        <p>Описание: {course.description}</p>
+                        <p>Описание: {ReactHtmlParser(course.description)}</p>
                         <p>Количество мест: {course.participantsNumber}</p>
                         <p>Начало курса: {course.startDate}</p>
                         <p>Конец курса: {course.endDate}</p>

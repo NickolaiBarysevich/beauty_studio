@@ -34,7 +34,7 @@ class Courses extends Component {
                     description={course.description}
                     id={course.id}
                 />
-                <ModalCourseDescription currCourse={course} id={"course-description-" + course.id}/>
+                <ModalCourseDescription currCourse={course} id={"course-description-" + course.id} showSubscribe/>
             </div>
         );
 

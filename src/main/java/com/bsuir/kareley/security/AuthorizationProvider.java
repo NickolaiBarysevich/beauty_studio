@@ -21,6 +21,7 @@ public class AuthorizationProvider {
     private static final String ROLE_CLAIM = "role";
     private static final String USER_ID_CLAIM = "userId";
     private static final long TOKEN_LIFE_TIME = 36000000000L;
+    public static final ThreadLocal<UserPrincipal> LOGGED_USER = new ThreadLocal<>();
 
     public UserPrincipal validateUser(String authToken, UserRole... grantedRoles) {
         String token;
@@ -38,6 +39,7 @@ public class AuthorizationProvider {
         if (Stream.of(grantedRoles).noneMatch(userRole -> userRole == userPrincipal.getUserRole())) {
             throw new ServiceException("forbidden", HttpStatus.FORBIDDEN);
         }
+        LOGGED_USER.set(userPrincipal);
         return userPrincipal;
     }
 

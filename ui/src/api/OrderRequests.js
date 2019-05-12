@@ -57,7 +57,7 @@ export const getUserOrders = (token) => {
 export const createOrder = (token, courseId) => {
     const url = '/api/orders?courseId=' + courseId;
     return fetch(url, {
-        method: 'PUT',
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             "Authorization": "Bearer " + token,
@@ -99,4 +99,17 @@ export const cancelOrder = (token, orderId) => {
         }
     })
         .then(response => response.json())
+};
+
+export const deleteOrder = (id, token) => {
+    const url = "/api/orders/" + id;
+    return fetch(url, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            "Authorization": "Bearer " + token,
+            'Accept-language': "ru"
+        }
+    })
+        .then(response => response.status === 200 ? {status: 200} : response.json())
 };

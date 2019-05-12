@@ -2,11 +2,14 @@ package com.bsuir.kareley.service.impl;
 
 import com.bsuir.kareley.dao.api.OrderDao;
 import com.bsuir.kareley.dao.api.UserDao;
+import com.bsuir.kareley.dto.CourseDto;
 import com.bsuir.kareley.entity.Course;
 import com.bsuir.kareley.entity.Order;
 import com.bsuir.kareley.entity.OrderStatus;
 import com.bsuir.kareley.entity.User;
 import com.bsuir.kareley.exception.ServiceException;
+import com.bsuir.kareley.security.AuthorizationProvider;
+import com.bsuir.kareley.security.UserPrincipal;
 import com.bsuir.kareley.service.api.CourseService;
 import com.bsuir.kareley.service.api.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +35,10 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void create(Order order) {
-        courseService.findById(order.getCourse().getId());
+        CourseDto course = courseService.findById(order.getCourse().getId());
+        UserPrincipal userPrincipal = AuthorizationProvider.LOGGED_USER.get();
+        if (course.getParticipants().stream().anyMatch(user -> user.getId() == userPrincipal.getId()))
+            throw new ServiceException("user.subscribed", HttpStatus.BAD_REQUEST);
         orderDao.create(order);
     }
 

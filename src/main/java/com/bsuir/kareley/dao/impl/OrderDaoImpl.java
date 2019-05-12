@@ -38,11 +38,6 @@ public class OrderDaoImpl extends AbstractDao<Order> implements OrderDao {
     }
 
     @Override
-    public void delete(int id) {
-        throw new UnsupportedOperationException("Order cannot be deleted");
-    }
-
-    @Override
     protected String getTableName() {
         return "course_order";
     }
