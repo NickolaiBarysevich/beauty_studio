@@ -57,7 +57,7 @@ export const getUserOrders = (token) => {
 export const createOrder = (token, courseId) => {
     const url = '/api/orders?courseId=' + courseId;
     return fetch(url, {
-        method: 'PUT',
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json',
             "Authorization": "Bearer " + token,

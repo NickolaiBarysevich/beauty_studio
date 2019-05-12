@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {deleteOrder} from "../../api/OrderRequests";
+import ModalCourseDescription from "../ModalCourseDescription/ModalCourseDescription"
 
 class UserOrder extends Component {
 
@@ -40,11 +41,11 @@ class UserOrder extends Component {
                 <td>
                     <div>
                         <a className="dropdown-item" href="#" data-toggle="modal"
-                           data-target={"#courseOrderView-" + order.course.id}>{order.course.title}</a>
-                        {/*<AdminCourseView course={order.course} id={"courseOrderView-" + order.course.id}/>*/}
+                           data-target={"#courseDescr-" + order.id}>{order.course.title}</a>
+                        <ModalCourseDescription currCourse={order.course} id={"courseDescr-" + order.id} />
                     </div>
                 </td>
-                <td>{() => this.defineOrderStatus(order)}</td>
+                <td>{this.defineOrderStatus(order)}</td>
                 <td>
                     {
                         order.orderStatus === "PROCESSING"

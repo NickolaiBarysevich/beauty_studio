@@ -5,6 +5,7 @@ import com.bsuir.kareley.entity.Order;
 import com.bsuir.kareley.entity.OrderStatus;
 import com.bsuir.kareley.entity.User;
 import com.bsuir.kareley.entity.UserRole;
+import com.bsuir.kareley.exception.ServiceException;
 import com.bsuir.kareley.security.AuthorizationProvider;
 import com.bsuir.kareley.security.UserPrincipal;
 import com.bsuir.kareley.service.api.OrderService;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping(value = "/api/orders",
