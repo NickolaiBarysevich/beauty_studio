@@ -23,7 +23,7 @@ class AdminUsers extends Component {
                     handleError(response.message)
                 }
             })
-            .catch(err => handleError("Сервер не доступен"))
+            .catch(err => handleError("Сервер недоступен"))
     };
 
     render() {
